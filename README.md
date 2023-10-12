@@ -1,2 +1,4 @@
-# not-quizlet
-Projet PIMA23
+# Projet P.I.M.A
+## the Polyglot Interactive Mastery App
+
+TBD
