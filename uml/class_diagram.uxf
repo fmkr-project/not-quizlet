@@ -1,9 +1,9 @@
-<diagram program="umletino" version="15.1"><zoom_level>12</zoom_level><element><id>UMLClass</id><coordinates><x>48</x><y>156</y><w>144</w><h>120</h></coordinates><panel_attributes>Card
+<diagram program="umletino" version="15.1"><zoom_level>13</zoom_level><element><id>UMLClass</id><coordinates><x>182</x><y>117</y><w>156</w><h>117</h></coordinates><panel_attributes>Card
 --
 - id: int
 - frontSide: string
 - backSide: string
-- labels: string[]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>336</x><y>108</y><w>144</w><h>168</h></coordinates><panel_attributes>Deck
+- labels: string[]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>494</x><y>39</y><w>156</w><h>208</h></coordinates><panel_attributes>Deck
 --
 - id: int
 - name: string
@@ -11,15 +11,24 @@
 -.
 - addCard
 - deleteCard
-- listCards</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>204</y><w>180</w><h>48</h></coordinates><panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+- visualizeCard
+- sendCardToBin
+- listCards</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>325</x><y>169</y><w>195</w><h>52</h></coordinates><panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*
-m2=1</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>336</x><y>372</y><w>144</w><h>120</h></coordinates><panel_attributes>User
+m2=1</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>494</x><y>338</y><w>156</w><h>143</h></coordinates><panel_attributes>User
 --
 - id: int
-- name: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>396</x><y>264</y><w>72</w><h>132</h></coordinates><panel_attributes>lt=&lt;-
+- name: string
+-.
+- addDeck
+- deleteDeck
+- listDecks</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>559</x><y>234</y><w>78</w><h>130</h></coordinates><panel_attributes>lt=&lt;-
 learn
 m1=*
-m2=*</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>396</x><y>480</y><w>132</w><h>132</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;50;90;50;90;90</additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>480</y><w>132</w><h>132</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>90;10;90;50;10;50;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>588</y><w>144</w><h>36</h></coordinates><panel_attributes>Learner</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>432</x><y>588</y><w>144</w><h>36</h></coordinates><panel_attributes>Creator</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>468</x><y>204</y><w>252</w><h>444</h></coordinates><panel_attributes>lt=&lt;-
+m2=*</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>559</x><y>468</y><w>143</w><h>143</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;50;90;50;90;90</additional_attributes></element><element><id>Relation</id><coordinates><x>455</x><y>468</y><w>143</w><h>143</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>90;10;90;50;10;50;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>390</x><y>585</y><w>156</w><h>39</h></coordinates><panel_attributes>Learner</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>598</x><y>585</y><w>156</w><h>78</h></coordinates><panel_attributes>Creator
+--
+- createDeck
+- editDeck</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>637</x><y>169</y><w>273</w><h>481</h></coordinates><panel_attributes>lt=&lt;-
 create
 m1=*
 m2=1</panel_attributes><additional_attributes>10;10;160;10;160;340;90;340</additional_attributes></element></diagram>
