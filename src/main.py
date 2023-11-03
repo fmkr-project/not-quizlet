@@ -4,8 +4,9 @@
 """Main entry point"""
 
 import deck
-import sqlite3 as sql
+import db
 
+import sqlite3 as sql
 import os
 
 DATABASE_LOCATION = "res/data.db"
@@ -15,8 +16,9 @@ if __name__ == '__main__' :
     with open('res/create_database.sql') as sqlfile:
         script = sqlfile.read()
     
-    data = sql.connect(DATABASE_LOCATION)
+    data = db.Database(sql.connect(DATABASE_LOCATION))
 
-    data.cursor().executescript(script)
+    data.database.cursor().executescript(script)
+    data.create_deck(2, "bar")
 
     # Put here the main loop code
