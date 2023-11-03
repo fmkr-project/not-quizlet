@@ -18,7 +18,6 @@ if __name__ == '__main__' :
     
     data = db.Database(sql.connect(DATABASE_LOCATION))
 
-    data.database.cursor().executescript(script)
-    data.create_deck(2, "bar")
+    data.execute_sql(script)
 
     # Put here the main loop code
