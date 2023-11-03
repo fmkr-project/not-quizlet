@@ -4,13 +4,19 @@
 """Main entry point"""
 
 import deck
+import sqlite3 as sql
 
 import os
 
-if __name__ == '__main__' :
-    # Use root directory instead of src
-    os.chdir("..")
+DATABASE_LOCATION = "res/data.db"
 
-    # TODO put some sqlite here
+if __name__ == '__main__' :
+    # Create the db if it does not exist
+    with open('res/create_database.sql') as sqlfile:
+        script = sqlfile.read()
+    
+    data = sql.connect(DATABASE_LOCATION)
+
+    data.cursor().executescript(script)
 
     # Put here the main loop code
