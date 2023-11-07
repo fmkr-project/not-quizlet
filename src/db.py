@@ -17,3 +17,8 @@ class Database:
     def create_deck(self, id, name):
         self.conn.cursor().execute("""insert into decks (id, name) values (?, ?)""", (id, name))
         self.conn.commit()
+    
+    def delete_deck(self, id):
+        query = """DELETE FROM decks WHERE id = ?"""
+        self.conn.cursor().execute(query, (id,))
+        self.conn.commit()
