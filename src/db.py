@@ -22,3 +22,7 @@ class Database:
         query = """DELETE FROM decks WHERE id = ?"""
         self.conn.cursor().execute(query, (id,))
         self.conn.commit()
+    def delete_card(self, id):
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM cards WHERE id values (?)", (id,))
+        self.conn.commit()
