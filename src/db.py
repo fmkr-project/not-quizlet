@@ -33,4 +33,8 @@ class Database:
         favorite_flag = int(favorite_flag)
         
         self.conn.cursor().execute(f"update decks set favorite_tag = ? where id = ?", (1-favorite_flag, id,))
+        
+    def delete_card(self, id):
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM cards WHERE id values (?)", (id,))
         self.conn.commit()
