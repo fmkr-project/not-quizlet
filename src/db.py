@@ -22,3 +22,15 @@ class Database:
         query = """DELETE FROM decks WHERE id = ?"""
         self.conn.cursor().execute(query, (id,))
         self.conn.commit()
+
+    def switch_deck_favorite_state(self, id):
+        """If the deck of given ID is favorited, unfavorite it, and vice-versa"""
+        # Guard against non-existent decks
+        favorite_flag = self.conn.cursor().execute("select favorite_tag from decks where id = ?", (id,)).fetchone()[0]
+        if favorite_flag is None:
+            print("This deck does not exist!")
+            return
+        favorite_flag = int(favorite_flag)
+        
+        self.conn.cursor().execute(f"update decks set favorite_tag = ? where id = ?", (1-favorite_flag, id,))
+        self.conn.commit()

@@ -11,6 +11,7 @@ insert or ignore into users (id, username) values (0, "System");
 create table if not exists "decks" ("id" integer not null primary key autoincrement,
                                     "name" text,
                                     "description" text,
+                                    "favorite_tag" integer default 0,
                                     "creator_id" integer default 0,
                                     foreign key (creator_id) references users(id));
 
