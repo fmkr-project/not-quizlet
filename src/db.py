@@ -8,17 +8,21 @@ class Database:
         self.db_path = db_path
     
     def connect(self):
+        """Connect to the database"""
         self.conn = sql.connect(self.db_path)
 
     def execute_sql(self, query):
+        """Execute an SQL query"""
         return self.conn.cursor().executescript(query)
     
 
     def create_deck(self, id, name):
+        """Create a new deck with an ID and a name"""
         self.conn.cursor().execute(f"insert into decks (id, name) values ({id}, '{name}')")
         self.conn.commit()
     
     def delete_deck(self, id):
+        """Delete the deck with the given ID"""
         query = """DELETE FROM decks WHERE id = ?"""
         self.conn.cursor().execute(query, (id,))
         self.conn.commit()
@@ -33,8 +37,9 @@ class Database:
         favorite_flag = int(favorite_flag)
         
         self.conn.cursor().execute(f"update decks set favorite_tag = ? where id = ?", (1-favorite_flag, id,))
-        
+
     def delete_card(self, id):
+        """Delete the card with the given ID"""
         cursor = self.conn.cursor()
         cursor.execute("DELETE FROM cards WHERE id values (?)", (id,))
         self.conn.commit()
