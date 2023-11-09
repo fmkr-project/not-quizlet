@@ -5,6 +5,7 @@
 
 import deck
 import db
+import debug
 
 import sqlite3 as sql
 
@@ -18,3 +19,4 @@ if __name__ == '__main__' :
     data.execute_sql(script)
 
     # Put here the main loop code
+    debug.sanitize_data(data)
