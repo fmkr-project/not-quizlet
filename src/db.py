@@ -43,3 +43,15 @@ class Database:
         cursor = self.conn.cursor()
         cursor.execute("DELETE FROM cards WHERE id values (?)", (id,))
         self.conn.commit()
+    def modify_card(self, id, new_front_side, new_back_side):
+        """Modify the card with the given ID"""
+        cursor = self.conn.cursor()
+        query = "UPDATE cards SET front_side = ?, back_side = ? WHERE ID = ?"
+        cursor.execute(query,(new_front_side, new_back_side, id))
+        self.conn.commit()
+    def modify_deck(self, id, name, description):
+        """Modify the deck with the given ID"""
+        cursor = self.conn.cursor()
+        query = "UPDATE decks SET name = ?, description = ? WHERE id = ?"
+        cursor.execute(query,(name, description, id))
+        self.conn.commit()
