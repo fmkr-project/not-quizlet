@@ -17,9 +17,7 @@ if __name__ == '__main__' :
     data = db.Database()
     data.connect()
     data.execute_sql(script)
-    data.create_card("Front_card", "Back_card")
-    data.delete_card(1)
-    data.create_deck("deck_0", "description_0")
 
     # Put here the main loop code
     debug.sanitize_data(data)
+    debug.run_tests(data)

@@ -17,6 +17,9 @@ CREATE TABLE if NOT EXISTS "decks" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREM
 
 CREATE TABLE if NOT EXISTS "cards" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                                     "front_side" TEXT,
-                                    "back_side" TEXT,
-                                    "deck_id" INTEGER,
-                                    FOREIGN KEY (deck_id) REFERENCES decks(id));
+                                    "back_side" TEXT);
+
+create table if not exists "card_links" ("card_id" integer not null,
+                                         "deck_id" integer not null,
+                                         foreign key (card_id) references cards(id),
+                                         foreign key (deck_id) references decks(id));
