@@ -15,6 +15,11 @@ class Database:
         """Execute an SQL query"""
         return self.conn.cursor().executescript(query)
     
+    def create_card(self, front_side, back_side):
+        """Create a new card"""
+        cursor = self.conn.cursor()
+        query = "INSERT INTO cards(front_side, back_side) VALUES (?,?)"
+        cursor.execute(query,(front_side, back_side))
 
     def create_deck(self, id, name):
         """Create a new deck with an ID and a name"""
@@ -41,7 +46,7 @@ class Database:
     def delete_card(self, id):
         """Delete the card with the given ID"""
         cursor = self.conn.cursor()
-        cursor.execute("DELETE FROM cards WHERE id values (?)", (id,))
+        cursor.execute("DELETE FROM cards WHERE id =?", (id,))
         self.conn.commit()
     def modify_card(self, id, new_front_side, new_back_side):
         """Modify the card with the given ID"""
