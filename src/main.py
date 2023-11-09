@@ -5,6 +5,7 @@
 
 import deck
 import db
+import debug
 
 import sqlite3 as sql
 
@@ -21,3 +22,4 @@ if __name__ == '__main__' :
     data.create_deck("deck_0", "description_0")
 
     # Put here the main loop code
+    debug.sanitize_data(data)
