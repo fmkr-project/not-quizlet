@@ -2,7 +2,7 @@ import db
 
 """Debug functions to delete before production"""
 
-def sanitize_data(data: db.Database):
+def clear_data(data: db.Database):
     """Clear everything in the db"""
     data.conn.execute("drop table cards;")
     data.conn.execute("drop table decks;")
