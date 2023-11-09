@@ -38,16 +38,16 @@ class Database:
         query, params = "DELETE FROM decks WHERE id = ?", (id)
         self.execute_query(query, params)
 
-    def switch_deck_favorite_state(self, id):
+    def switch_deck_favorite_state(self, user_id, deck_id):
         """If the deck of given ID is favorited, unfavorite it, and vice-versa"""
         # Guard against non-existent decks
-        query, params = "SELECT favorite_tag FROM decks WHERE id = ?", (id)
+        query, params = "SELECT favorite_tag FROM users_links WHERE user_id = ? AND deck_id = ?", (user_id, deck_id)
         favorite_flag = self.execute_query(query, params, False).fetchone()[0]
         if favorite_flag is None:
             print("This deck does not exist!")
             return
         favorite_flag = int(favorite_flag)
-        query_update, params_update = "UPDATE decks SET favorite_tag = ? WHERE id = ?", (1-favorite_flag, id)
+        query_update, params_update = "UPDATE users_links SET favorite_tag = ? WHERE user_id = ? AND deck_id = ?", (1-favorite_flag, user_id, deck_id)
         self.execute_query(query_update, params)
 
     def delete_card(self, id):
