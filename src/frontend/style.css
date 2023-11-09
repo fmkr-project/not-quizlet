@@ -1,0 +1,106 @@
+/* Reset some default styles for a cleaner look */
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Primary Navigation Bar */
+.primary-nav {
+  background-color: #007BFF; /* Your chosen color for the primary nav */
+  padding: 10px 0;
+  overflow: hidden;
+}
+
+.primary-nav a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.primary-nav a:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Secondary Navigation Bar */
+.secondary-nav {
+  background-color: #0056b3; /* A slightly different shade for the secondary nav */
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.secondary-nav .nav-item, .secondary-nav .dropbtn {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.secondary-nav .nav-item:hover, .secondary-nav .dropdown:hover .dropbtn {
+  background-color: #003366; /* Even darker blue on hover */
+}
+
+/* Dropdown container and content styles */
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Style adjustments for the dropdown */
+.dropbtn {
+  background-color: inherit; /* Inherit from parent container */
+  border: none; /* Remove borders */
+  outline: none; /* Remove focus outline */
+  margin: 0; /* Remove margins */
+  padding: 14px 16px; /* Same padding as nav-items for alignment */
+  font-size: 17px; /* Size to match nav-items */
+}
+
+/* Main content styling */
+.main-content {
+  padding: 20px;
+  background-color: #e6f7ff; /* Light blue background for the content area */
+  min-height: calc(100vh - 48px); /* Adjust based on the total height of the navigation bars */
+}
+
+/* Clear floats */
+.navbar::after {
+  content: "";
+  display: table;
+  clear: both;
+}
