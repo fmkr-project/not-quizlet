@@ -20,7 +20,7 @@ class Database:
         cursor = self.conn.cursor()
         query = "INSERT INTO cards(front_side, back_side) VALUES (?,?)"
         cursor.execute(query,(front_side, back_side))
-
+        self.conn.commit()
     def create_deck(self, id, name):
         """Create a new deck with an ID and a name"""
         self.conn.cursor().execute(f"insert into decks (id, name) values ({id}, '{name}')")
