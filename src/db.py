@@ -11,52 +11,56 @@ class Database:
         """Connect to the database"""
         self.conn = sql.connect(self.db_path)
 
-    def execute_sql(self, query):
+    def execute_sql(self, script):
+        self.conn.executescript(script)
+
+    def execute_query(self, query, params, data_manip = True):
         """Execute an SQL query"""
-        return self.conn.cursor().executescript(query)
+        self.connect()
+        if data_manip:
+            self.conn.execute(query, params)
+            self.conn.commit()
+        else:
+            return self.conn.execute(query, params)
     
     def create_card(self, front_side, back_side):
         """Create a new card"""
-        cursor = self.conn.cursor()
-        query = "INSERT INTO cards(front_side, back_side) VALUES (?,?)"
-        cursor.execute(query,(front_side, back_side))
-        self.conn.commit()
-    def create_deck(self, id, name):
-        """Create a new deck with an ID and a name"""
-        self.conn.cursor().execute(f"insert into decks (id, name) values ({id}, '{name}')")
-        self.conn.commit()
-    
+        query, params = "INSERT INTO cards(front_side, back_side) VALUES (?,?)", (front_side, back_side)
+        self.execute_query(query, params)
+        
+    def create_deck(self, name, description):
+        """Create a new deck with a name and a description"""
+        query, params = "INSERT INTO decks (name, description) VALUES (?,?)", (name, description)
+        self.execute_query(query, params)
+
     def delete_deck(self, id):
         """Delete the deck with the given ID"""
-        query = """DELETE FROM decks WHERE id = ?"""
-        self.conn.cursor().execute(query, (id,))
-        self.conn.commit()
+        query, params = "DELETE FROM decks WHERE id = ?", (id)
+        self.execute_query(query, params)
 
     def switch_deck_favorite_state(self, id):
         """If the deck of given ID is favorited, unfavorite it, and vice-versa"""
         # Guard against non-existent decks
-        favorite_flag = self.conn.cursor().execute("select favorite_tag from decks where id = ?", (id,)).fetchone()[0]
+        query, params = "SELECT favorite_tag FROM decks WHERE id = ?", (id)
+        favorite_flag = self.execute_query(query, params, False).fetchone()[0]
         if favorite_flag is None:
             print("This deck does not exist!")
             return
         favorite_flag = int(favorite_flag)
-        
-        self.conn.cursor().execute(f"update decks set favorite_tag = ? where id = ?", (1-favorite_flag, id,))
+        query_update, params_update = "UPDATE decks SET favorite_tag = ? WHERE id = ?", (1-favorite_flag, id)
+        self.execute_query(query_update, params)
 
     def delete_card(self, id):
         """Delete the card with the given ID"""
-        cursor = self.conn.cursor()
-        cursor.execute("DELETE FROM cards WHERE id =?", (id,))
-        self.conn.commit()
+        query, params = "DELETE FROM cards WHERE id =?", (id)
+        self.execute_query(query, params)
+
     def modify_card(self, id, new_front_side, new_back_side):
         """Modify the card with the given ID"""
-        cursor = self.conn.cursor()
-        query = "UPDATE cards SET front_side = ?, back_side = ? WHERE ID = ?"
-        cursor.execute(query,(new_front_side, new_back_side, id))
-        self.conn.commit()
+        query, params = "UPDATE cards SET front_side = ?, back_side = ? WHERE ID = ?", (new_front_side, new_back_side, id)
+        self.execute_query(query, params)
+
     def modify_deck(self, id, name, description):
         """Modify the deck with the given ID"""
-        cursor = self.conn.cursor()
-        query = "UPDATE decks SET name = ?, description = ? WHERE id = ?"
-        cursor.execute(query,(name, description, id))
-        self.conn.commit()
+        query, params = "UPDATE decks SET name = ?, description = ? WHERE id = ?", (name, description, id)
+        self.execute_query(query, params)

@@ -6,17 +6,17 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-insert or ignore into users (id, username) values (0, "System");
+INSERT OR IGNORE INTO users (id, username) VALUES (0, "System");
 
-create table if not exists "decks" ("id" integer not null primary key autoincrement,
-                                    "name" text,
-                                    "description" text,
-                                    "favorite_tag" integer default 0,
-                                    "creator_id" integer default 0,
-                                    foreign key (creator_id) references users(id));
+CREATE TABLE if NOT EXISTS "decks" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                    "name" TEXT,
+                                    "description" TEXT,
+                                    "favorite_tag" INTEGER DEFAULT 0,
+                                    "creator_id" INTEGER DEFAULT 0,
+                                    FOREIGN KEY (creator_id) REFERENCES users(id));
 
-create table if not exists "cards" ("id" integer not null primary key autoincrement,
-                                    "front_side" text,
-                                    "back_side" text,
-                                    "deck_id" integer,
-                                    foreign key (deck_id) references decks(id));
+CREATE TABLE if NOT EXISTS "cards" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                    "front_side" TEXT,
+                                    "back_side" TEXT,
+                                    "deck_id" INTEGER,
+                                    FOREIGN KEY (deck_id) REFERENCES decks(id));
