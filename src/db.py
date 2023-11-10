@@ -2,27 +2,39 @@ import sqlite3 as sql
 
 
 DATABASE_LOCATION = "res/data.db"
+DATABASE_INIT_SQL_LOCATION = "res/create_database.sql"
 
 class Database:
     def __init__(self, db_path = DATABASE_LOCATION):
         self.db_path = db_path
-    
+        self.conn = None
     def connect(self):
         """Connect to the database"""
         self.conn = sql.connect(self.db_path)
 
     def execute_sql(self, script):
-        self.conn.executescript(script)
-
-    def execute_query(self, query, params, data_manip = True):
-        """Execute an SQL query"""
         self.connect()
-        if data_manip:
-            self.conn.execute(query, params)
-            self.conn.commit()
-        else:
-            return self.conn.execute(query, params)
-    
+        self.conn.executescript(script)
+        self.conn.close()
+
+    def execute_query(self, query, params, data_manip=True):
+        """Execute an SQL query"""
+        try:
+            self.connect()
+            cursor = self.conn.cursor()
+            cursor.execute(query, params)
+            if data_manip:
+                self.conn.commit()
+            else:
+                # Fetch all rows if the query is meant to retrieve data
+                rows = cursor.fetchall()
+                return rows
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            raise
+        finally:
+            cursor.close()
+            self.conn.close()
     def create_card(self, front_side, back_side):
         """Create a new card"""
         query, params = "INSERT INTO cards(front_side, back_side) VALUES (?,?)", (front_side, back_side)
@@ -40,15 +52,17 @@ class Database:
 
     def switch_deck_favorite_state(self, user_id, deck_id):
         """If the deck of given ID is favorited, unfavorite it, and vice-versa"""
-        # Guard against non-existent decks
         query, params = "SELECT favorite_tag FROM users_links WHERE user_id = ? AND deck_id = ?", (user_id, deck_id)
-        favorite_flag = self.execute_query(query, params, False).fetchone()[0]
-        if favorite_flag is None:
+        result = self.execute_query(query, params, False)
+        # If there is no such row, then the deck does not exist for the user
+        if not result:
             print("This deck does not exist!")
-            return
-        favorite_flag = int(favorite_flag)
-        query_update, params_update = "UPDATE users_links SET favorite_tag = ? WHERE user_id = ? AND deck_id = ?", (1-favorite_flag, user_id, deck_id)
-        self.execute_query(query_update, params)
+            return False
+        favorite_flag = int(result[0][0])
+        new_favorite_flag = 1 if favorite_flag == 0 else 0 
+        query_update, params_update = "UPDATE users_links SET favorite_tag = ? WHERE user_id = ? AND deck_id = ?", (new_favorite_flag, user_id, deck_id)
+        self.execute_query(query_update, params_update, True)
+        return True
 
     def delete_card(self, id):
         """Delete the card with the given ID"""

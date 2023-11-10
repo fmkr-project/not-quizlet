@@ -11,13 +11,5 @@ import sqlite3 as sql
 
 if __name__ == '__main__' :
     # Create the db if it does not exist
-    with open('res/create_database.sql') as sqlfile:
-        script = sqlfile.read()
-    
-    data = db.Database()
-    data.connect()
-    data.execute_sql(script)
-
-    # Put here the main loop code
-    debug.sanitize_data(data)
-    debug.run_tests(data)
+    debug = debug.Debug()             #Debug contains db.Database object as the data field and will be used for testing purposes
+    debug.reset_database()

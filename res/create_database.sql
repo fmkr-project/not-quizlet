@@ -23,7 +23,7 @@ CREATE INDEX IF NOT EXISTS "idx_cards_creator_id" ON "cards" ("creator_id");
 --- Card Links Table , where cards are linked to decks
 CREATE TABLE IF NOT EXISTS "card_links" ("card_id" INTEGER NOT NULL,
                                          "deck_id" INTEGER NOT NULL,
-                                         PRIMARY KEY ("user_id", "deck_id"),
+                                         PRIMARY KEY ("card_id", "deck_id"),
                                          FOREIGN KEY ("card_id") REFERENCES "cards"("id"),
                                          FOREIGN KEY ("deck_id") REFERENCES "decks"("id"));
 CREATE INDEX IF NOT EXISTS "idx_card_links_card_id" ON "card_links" ("card_id");
