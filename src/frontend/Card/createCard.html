@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Card - Polyglot Interactive Mastery App</title>
+  <link rel="stylesheet" href="createCard.css"> <!-- Link to the new specific CSS file for Create Card -->
+</head>
+<body>
+  <div id="app">
+    <!-- Primary Navigation Bar -->
+    <nav class="navbar primary-nav">
+      <a href="index.html">P.I.M.A</a>
+    </nav>
+    <!-- Secondary Navigation Bar -->
+    <nav class="navbar secondary-nav">
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">Card</a>
+        <div class="dropdown-content">
+          <a href="createCard.html">Create a Card</a>
+          <a href="modifyCard.html">Modify a Card</a>
+          <a href="deleteCard.html">Delete a Card</a>
+          <a href="viewCard.html">View a Card</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">My Deck</a>
+        <div class="dropdown-content">
+            <a href="createDeck.html">Create a Deck</a>
+            <a href="modifyDeck.html">Modify Deck</a>
+            <a href="deleteDeck.html">Delete Deck</a>
+            <a href="viewDeck.html">View Deck</a>
+        </div>
+      </div>
+    </nav>
+    <!-- Body Content -->
+    <main class="main-content">
+        <div class="card-creation-container">
+          <h1 class="container-h1">Create a New Card</h1>
+          <form id="new-card-form" class="card-creation-form">
+            <label for="card-name">Card's name:</label>
+            <input type="text" id="card-name" name="cardName" required>
+      
+            <label for="card-description">Description:</label>
+            <textarea id="card-description" name="cardDescription" required></textarea>
+      
+            <button type="submit" class="btn-create">Create Card</button>
+          </form>
+        </div>
+      </main>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <!-- Link to your JavaScript file if necessary -->
+  <script src="script.js"></script>
+</body>
+</html>
