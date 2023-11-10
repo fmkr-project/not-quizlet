@@ -1,6 +1,4 @@
 import db
-import sqlite3
-import time
 class Debug():
     """Debug class containing functions to run some tests during production"""
     def __init__(self, db_path = db.DATABASE_LOCATION):

@@ -1,8 +1,8 @@
 import sqlite3 as sql
-
-
-DATABASE_LOCATION = "res/data.db"
-DATABASE_INIT_SQL_LOCATION = "res/create_database.sql"
+import env
+from os import getenv
+DATABASE_LOCATION = getenv("DB_PATH")
+DATABASE_INIT_SQL_LOCATION = getenv("DB_SCHEMA")
 
 class Database:
     def __init__(self, db_path = DATABASE_LOCATION):
@@ -59,6 +59,7 @@ class Database:
         """Delete the deck with the given ID"""
         query, params = "DELETE FROM decks WHERE id = ?", (id)
         self.execute_query(query, params)
+
     def switch_deck_favorite_state(self, user_id, deck_id):
         """If the deck of given ID is favorited, unfavorite it, and vice-versa"""
         query, params = "SELECT favorite_tag FROM users_links WHERE user_id = ? AND deck_id = ?", (user_id, deck_id)
