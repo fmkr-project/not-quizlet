@@ -7,8 +7,8 @@ class Debug():
         self.db_path = db_path
         self.data = db.Database(db_path) 
     def drop_all_tables(self):
-        data = self.data
         """Remove all the tables from the database"""
+        data = self.data
         database_path = data.db_path
         data.connect()
         conn = data.conn
@@ -22,6 +22,7 @@ class Debug():
         cursor.close()
         conn.close()
     def initiate_database(self):
+        """Initiates the database using the database schema"""
         data = self.data
         with open(db.DATABASE_INIT_SQL_LOCATION) as sqlfile:
             script = sqlfile.read()
