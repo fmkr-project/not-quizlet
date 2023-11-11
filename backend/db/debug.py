@@ -29,5 +29,7 @@ class Debug():
         """Clear everything in the database and recreate it using the creation script"""
         self.drop_all_tables()
         self.initiate_database()
-    def run_tests(self):
+    def run_tests(self, test_to_run):
+        """Define a function inside this function of the test you want to perform"""
         pass
+
