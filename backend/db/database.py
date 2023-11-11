@@ -1,5 +1,4 @@
 import sqlite3 as sql
-from ..env import *
 from os import getenv
 DATABASE_LOCATION = getenv("DB_PATH")
 DATABASE_INIT_SQL_LOCATION = getenv("DB_SCHEMA")

@@ -1,2 +1,2 @@
 from .debug import Debug
-from .db import Database
+from .database import Database

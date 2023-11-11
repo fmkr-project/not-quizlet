@@ -1,4 +1,5 @@
-import db
+import db.database as db
+import os
 class Debug():
     """Debug class containing functions to run some tests during production"""
     def __init__(self, db_path = db.DATABASE_LOCATION):
@@ -29,7 +30,7 @@ class Debug():
         """Clear everything in the database and recreate it using the creation script"""
         self.drop_all_tables()
         self.initiate_database()
-    def run_tests(self, test_to_run):
+    def run_tests(self, test_to_run = ""):
         """Define a function inside this function of the test you want to perform"""
-        pass
+        print(os.getenv("DB_PATH"))
 
