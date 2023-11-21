@@ -6,7 +6,7 @@
 
 ### Overview
 
-Welcome to the repository of the Polyglot Interactive Mastery App (P.I.M.A), a comprehensive tool designed for language learners to interactively master new languages. P.I.M.A facilitates learning through user-generated flashcards and decks, providing a versatile and engaging learning experience.
+Welcome to the repository of the Polyglot Interactive Mastery App (AKA: P.I.M.A😏), a comprehensive tool designed for language learners to interactively master new languages. P.I.M.A facilitates learning through user-generated flashcards and decks, providing a versatile and engaging learning experience.
 
 ### Key Features
 
