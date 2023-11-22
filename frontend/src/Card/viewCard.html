@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Cards - Polyglot Interactive Mastery App</title>
+  <link rel="stylesheet" href="style.css"> <!-- Make sure the path to style.css is correct -->
+</head>
+<body>
+    <div id="app">
+        <!-- Primary Navigation Bar -->
+        <nav class="navbar primary-nav">
+            <a href="..\index.html">P.I.M.A</a>
+        </nav>
+        <!-- Secondary Navigation Bar -->
+        <nav class="navbar secondary-nav">
+            <div class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Card</a>
+                <div class="dropdown-content">
+                    <a href="createCard.html">Create a Card</a>
+                    <a href="modifyCard.html">Modify a Card</a>
+                    <a href="deleteCard.html">Delete a Card</a>
+                    <a href="viewCard.html">View a Card</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">My Deck</a>
+                <div class="dropdown-content">
+                    <a href="createDeck.html">Create a Deck</a>
+                    <a href="modifyDeck.html">Modify Deck</a>
+                    <a href="deleteDeck.html">Delete Deck</a>
+                    <a href="viewDeck.html">View Deck</a>
+                </div>
+            </div>
+        </nav>
+        <!-- Body Content -->
+        <main class="main-content">
+            <div class="search-container">
+                <input type="text" id="card-search" class="search-bar" placeholder="Search card by name...">
+            </div>
+            <ul class="card-list">
+            <li class="card-item" v-for="card in cards" :key="card.id">
+                <span class="card-name">{{ card.name }}</span>
+                <button class="view-btn" @click="selectedCard = card; showModal = true">View</button>
+            </li>
+            </ul>
+        </main>
+
+        <!-- Card Detail Modal -->
+        <div v-if="showModal" class="modal" @click="showModal = false">
+            <div class="flip-card" @click.stop="flipCard = !flipCard">
+            <div class="flip-card-inner" :class="{ flipped: flipCard }">
+                <div class="flip-card-front">
+                {{ selectedCard.name }}
+                </div>
+                <div class="flip-card-back">
+                {{ selectedCard.description }}
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <!-- Link to your JavaScript file if necessary -->
+  <script src="script.js"></script>
+</body>
+</html>
