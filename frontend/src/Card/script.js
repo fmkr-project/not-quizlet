@@ -4,31 +4,31 @@ const app = Vue.createApp({
         showModal: false,
         flipCard: false,
         selectedCard: null,
-        cards: [], // Will be populated with data from the Flask API
+        cards: [], // This will be populated with data from your Flask API
       };
     },
     methods: {
-      // Method to fetch card data from Flask API
-      fetchCardData() {
-        fetch('/api/cards') // Adjust '/api/cards' to match your Flask API endpoint
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
-          })
+      viewCardDetails(card) {
+        this.selectedCard = card;
+        this.flipCard = false; // Start with the front side
+        this.showModal = true; // Show the modal
+      },
+      toggleFlipCard() {
+        this.flipCard = !this.flipCard; // Toggle the flipped state
+      },
+      fetchCards() {
+        fetch('/api/cards') // Endpoint to your Flask API
+          .then(response => response.json())
           .then(data => {
-            this.cards = data.cards; // Adjust this if your JSON structure is different
+            this.cards = data; // Assuming your Flask API sends back an array of cards
           })
           .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+            console.error('Error fetching cards:', error);
           });
       }
     },
     mounted() {
-      this.fetchCardData(); // Fetch card data when the component is mounted
+      this.fetchCards(); // Fetch the cards from the Flask API when the component mounts
     }
-  });
-  
-  app.mount('#app');
+  }).mount('#app');
   

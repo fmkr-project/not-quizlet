@@ -233,7 +233,8 @@ html, body {
   background-color: #218c19; /* A darker green for hover state */
 }
 
-/* Modal styles */
+/* Add your existing styles here, then add the modal and flip card styles. */
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed;
@@ -244,15 +245,17 @@ html, body {
   height: 100%;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Flip card styles */
 .flip-card {
   background-color: transparent;
   width: 300px;
   height: 200px;
   perspective: 1000px;
-  margin: 10% auto;
+  margin: auto; /* Center in the viewport */
 }
 
 .flip-card-inner {
@@ -264,8 +267,7 @@ html, body {
   transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-card-inner,
-.flip-card.flipped .flip-card-inner {
+.flip-card-inner.flipped {
   transform: rotateY(180deg);
 }
 
@@ -274,7 +276,6 @@ html, body {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
