@@ -18,7 +18,6 @@ def register_user():
     client_hashed_password = data.get('password')  # Already hashed by client
     if not username or not email or not client_hashed_password:
         return jsonify({'error': 'Missing fields'}), 400
-
     if my_db.user_exists_already(username=username, email=email):
         return jsonify({'error': 'Username or Email already registered'}), 409
     salt = urandom(16).hex()
