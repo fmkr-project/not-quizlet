@@ -9,5 +9,6 @@ API_VERSION = getenv("API_VERSION")
 if __name__ == '__main__' :
     # Create the db if it does not exist
     debug = Debug()
-    print(my_db)
+    debug.reset_database()
+
 
