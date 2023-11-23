@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Deck - Polyglot Interactive Mastery App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Primary Navigation Bar -->
+    <nav class="navbar primary-nav">
+      <a href="../index.html">P.I.M.A</a>
+    </nav>
+    <!-- Secondary Navigation Bar -->
+    <nav class="navbar secondary-nav">
+        <div class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">Card</a>
+          <div class="dropdown-content">
+            <a href="../Card/createCard.html">Create a Card</a>
+            <a href="../Card/modifyCard.html">Modify a Card</a>
+            <a href="../Card/deleteCard.html">Delete a Card</a>
+            <a href="../Card/viewCard.html">View a Card</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">My Deck</a>
+          <div class="dropdown-content">
+              <a href="createDeck.html">Create a Deck</a>
+              <a href="modifyDeck.html">Modify Deck</a>
+              <a href="deleteDeck.html">Delete Deck</a>
+              <a href="viewDeck.html">View Deck</a>
+          </div>
+        </div>
+      </nav>
+    
+    <!-- Body Content -->
+    
+    <main class="main-content">
+        <div class="card-creation-container">
+          <!-- Deck Name Form -->
+          <div v-if="step === 1">
+            <h1 class="container-h1">Name Your New Deck</h1>
+            <div class="input-group">
+                <input type="text" v-model="newDeck.name" placeholder="Deck Name" required>
+                <button @click="nextStep">Next</button>
+              </div>
+          </div>
+  
+          <!-- Card Addition Options -->
+          <div v-if="step === 2">
+            <button @click="showCreateCard = true">Create New Card</button>
+            <button @click="showAddCard = true">Add Existing Card</button>
+          </div>
+  
+          <!-- Create New Card Form -->
+          <div v-if="showCreateCard">
+            <h2>Create a New Card</h2>
+            <input type="text" v-model="newCard.name" placeholder="Card Name" required>
+            <textarea v-model="newCard.description" placeholder="Card Description" required></textarea>
+            <button @click="addNewCardToDeck">Add Card to Deck</button>
+            <button @click="showCreateCard = false">Back to Options</button>
+          </div>
+  
+          <!-- Add Existing Cards List -->
+          <div v-if="showAddCard">
+            <h2>Add a Card to Your Deck</h2>
+            <ul>
+              <li v-for="card in allCards" :key="card.id">
+                {{ card.name }}
+                <button @click="addExistingCardToDeck(card)">Add</button>
+              </li>
+            </ul>
+            <button @click="showAddCard = false">Back to Options</button>
+          </div>
+  
+          <!-- Final Step: Create Deck -->
+          <div v-if="step === 3">
+            <h2>Ready to Create Your Deck?</h2>
+            <button @click="createDeck">Create Deck</button>
+          </div>
+        </div>
+    </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
