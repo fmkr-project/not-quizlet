@@ -1,3 +1,5 @@
 Flask
 Werkzeug
 python-dotenv
+pyjwt
+flask_mail

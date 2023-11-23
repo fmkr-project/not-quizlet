@@ -1,0 +1,1 @@
+tree /f /a > folder_structure.txt

@@ -1,16 +1,30 @@
 import sqlite3 as sql
 from os import getenv
+from werkzeug.security import check_password_hash
 DATABASE_LOCATION = getenv("DB_PATH")
 DATABASE_INIT_SQL_LOCATION = getenv("DB_SCHEMA")
-
+JWT_SECRET_KEY = getenv("JWT_SECRET_KEY")
 class Database:
     def __init__(self, db_path = DATABASE_LOCATION):
+        """Creates an instance of the database class to make operations on the database"""
         self.db_path = db_path
         self.conn = None
+    def __repr__(self):
+        """Representation of an instance of the Database class"""
+        is_connected = self.conn is not None
+        return f'''<Database object: 
+        - Path = {self.db_path}
+        - Connection = {is_connected}>'''
+    
     def connect(self):
         """Connect to the database"""
         self.conn = sql.connect(self.db_path)
+    def close(self):
+        """Disconnect the database"""
+        self.conn.close()
+
     def execute_sql(self, script):
+        """"Executes a SQL script (useful for making the setup of a schema)"""
         self.connect()
         self.conn.executescript(script)
         self.conn.close()
@@ -81,7 +95,88 @@ class Database:
         result = self.execute_query(query, params, False)
         return result
 
+    def user_exists_already(self, username=None, email=None):
+        query = "SELECT 1 FROM users WHERE "
+        params = ()
+
+        if email and username:
+            query += "email = ? OR username = ?"
+            params = (email, username)
+        elif email:
+            query += "email = ?"
+            params = (email,)
+        elif username:
+            query += "username = ?"
+            params = (username,)
+        else:
+            return False
+
+        self.connect()
+        cur = self.conn.cursor()
+        cur.execute(query, params)
+        exists = cur.fetchone() is not None
+        self.close()
+        return exists
+    def register_user(self, username, email, server_hash, salt):
+        query, params = 'INSERT INTO users(username, email, password_hash, salt) VALUES(?,?,?,?)', (username, email, server_hash, salt)
+        try:
+            self.connect()
+            cur = self.conn.cursor()
+            cur.execute(query, params)
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            return False
+        finally:
+            self.close()
+    def login_user(self, email, client_hashed_password):
+        query, params = "SELECT password_hash, salt FROM users WHERE email = ?", (email)
+        try:
+            self.connect()
+            cur = self.conn.cursor()
+            cur.execute(query, params)
+            user = cur.fetchone()
+            if user and check_password_hash(user['password_hash'], client_hashed_password + user['salt']):
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(f"Error: {e}")
+            return False
+        finally:
+            self.close()
 
 
+    def get_user_details(self, user_id):
+        """Gets the user details considering his user_id"""
+        query, params = "SELECT id, username, email, created_at FROM users WHERE id = ?", (user_id)
+        try:
+            self.connect()
+            cur = self.conn.cursor()
+            cur.execute(query, params)
+            user_details = cur.fetchone()
+            return user_details
+        except Exception as e:
+            print(f"Error: {e}")
+            return None
+        finally:
+            self.close()
 
-
+    def get_user_id_from_identifier(self, identifier, search_by_email=True):
+        """Returns the user_id (None if not found) from an identifier that is either the email (by default) or the username"""
+        if search_by_email:
+            query, params = "SELECT id FROM users WHERE email = ?", (identifier)
+        else:
+            query, params = "SELECT id FROM users WHERE username = ?", (identifier)
+        try:
+            self.connect()
+            cur = self.conn.cursor()
+            cur.execute(query, params)
+            user = cur.fetchone()
+            return user["id"] if user else None
+        except Exception as e:
+            print(f"Error: {e}")
+            return None
+        finally:
+            self.close()
