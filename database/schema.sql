@@ -1,9 +1,12 @@
 --- Users Table
 CREATE TABLE IF NOT EXISTS "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT,
                                     "username" TEXT NOT NULL UNIQUE,
-                                    "email" TEXT NOT NULL,
+                                    "email" TEXT NOT NULL UNIQUE,
                                     "password_hash" TEXT NOT NULL,
+                                    "salt" TEXT NOT NULL,
                                     "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX IF NOT EXISTS "idx_users_email" ON "users" ("email");
+CREATE INDEX IF NOT EXISTS "idx_users_username" ON "users" ("username");
 --- The password_hash values for System corresponds to the hash of the password "None123"
 INSERT OR IGNORE INTO "users"("id", "username", "email", "password_hash") VALUES (0, "System", "xyz@example.com", "1faebba052902f1abba80cddc553f8d8f213e00e0e128da7dc628ddb0688cf0a");
 --- Decks Table

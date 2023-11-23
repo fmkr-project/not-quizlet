@@ -1,13 +1,25 @@
 ﻿not-quizlet
     |-- backend
         |-- app
+            |-- api
+                |-- __pycache__
+                |-- card_routes.py
+                |-- deck_routes.py
+                |-- user_routes.py
+                |-- __init__.py
+            |-- config
+                |-- development.py
+                |-- __init__.py
             |-- structures
                 |-- card.py
                 |-- deck.py
                 |-- __init__.py
+            |-- __pycache__
+            |-- app.py
             |-- __init__.py
         |-- db
-            |-- db.py
+            |-- __pycache__
+            |-- database.py
             |-- debug.py
             |-- __init__.py
         |-- env
@@ -16,6 +28,7 @@
             |-- __init__.py
         |-- __pycache__
         |-- main.py
+        |-- __init__.py
     |-- database
         |-- data.db
         |-- schema.sql
@@ -33,7 +46,16 @@
                 |-- createCard.html
                 |-- deleteCard.html
                 |-- modifyCard.html
+                |-- script.js
                 |-- style.css
+                |-- viewCard.html
+            |-- Deck
+                |-- createDeck.html
+                |-- deleteDeck.html
+                |-- modifyDeck.html
+                |-- script.js
+                |-- style.css
+                |-- viewDeck.html
             |-- index.html
             |-- main.js
             |-- script.js
@@ -45,6 +67,9 @@
             |-- setup.sh
         |-- windows
             |-- setup_scripts
+                |-- install_dependencies.bat
                 |-- install_dependencies.ps1
+            |-- install.ps1
             |-- setup.bat
     |-- .gitignore
+    |-- project_structure.bat

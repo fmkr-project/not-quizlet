@@ -1,12 +1,11 @@
-import importlib
-"""Gets the blueprint with the desired API version"""
-def get_api_blueprint(version):
-    try:
-        # Dynamically import the module based on the version
-        print(version)
-        version_module = importlib.import_module(f"{version}", package="backend.app.api")
-        vi_blueprint = getattr(version_module, f"{version}_blueprint")
-        return vi_blueprint  #Get the variable {version}_blueprint
-    except ImportError:
-        raise ValueError(f"Invalid API version: {version}")
-get_api_blueprint("v1")
+from flask import Blueprint
+from .user_routes import user_blueprint
+from .deck_routes import deck_blueprint
+from .card_routes import card_blueprint
+from os import getenv
+API_VERSION = getenv("API_VERSION")
+
+api_blueprint = Blueprint(API_VERSION, __name__, url_prefix='/api/'+API_VERSION)
+api_blueprint.register_blueprint(user_blueprint, url_prefix='/users')
+api_blueprint.register_blueprint(deck_blueprint, url_prefix='/decks')
+api_blueprint.register_blueprint(card_blueprint, url_prefix='/cards')
