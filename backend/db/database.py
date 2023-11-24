@@ -1,27 +1,57 @@
 import sqlite3 as sql
 from os import getenv
 from werkzeug.security import check_password_hash
+import mysql.connector
+#### Determine if the database used is local or the one hosted
+USE_LOCAL_DATABASE = (getenv("USE_LOCAL_DATABASE", "True") == True)
+
+### Used if LOCAL_DATABASE = True
 DATABASE_LOCATION = getenv("DB_PATH")
 DATABASE_INIT_SQL_LOCATION = getenv("DB_SCHEMA")
+
+
+### Used if LOCAL_DATABASE = False
+DATABASE_ENDPOINT = getenv('DATABASE_ENDPOINT')
+DATABASE_PORT = int(getenv('DATABASE_PORT', 3306))
+DATABASE_USERNAME = getenv('DATABASE_USERNAME')
+DATABASE_PASSWORD = getenv('DATABASE_PASSWORD')
+DATABASE_NAME = getenv('DATABASE_NAME')
+
+### JSON WEB-TOKENS
 JWT_SECRET_KEY = getenv("JWT_SECRET_KEY")
+
 class Database:
-    def __init__(self, db_path = DATABASE_LOCATION):
+    def __init__(self, is_local = USE_LOCAL_DATABASE, db_path = DATABASE_LOCATION):
         """Creates an instance of the database class to make operations on the database"""
         self.db_path = db_path
+        self.is_local = is_local
         self.conn = None
     def __repr__(self):
         """Representation of an instance of the Database class"""
         is_connected = self.conn is not None
         return f'''<Database object: 
         - Path = {self.db_path}
-        - Connection = {is_connected}>'''
+        - Connection = {is_connected}
+        - Local = {self.is_local}>'''
     
     def connect(self):
         """Connect to the database"""
-        self.conn = sql.connect(self.db_path)
+        if self.is_local:
+            self.conn = sql.connect(self.db_path)
+        else:
+            db_config = {
+                'user': DATABASE_USERNAME,
+                'password': DATABASE_PASSWORD,
+                'host': DATABASE_ENDPOINT,
+                'port': DATABASE_PORT,
+                'database': DATABASE_NAME
+            }
     def close(self):
         """Disconnect the database"""
-        self.conn.close()
+        if self.conn:
+            self.conn.close()
+        else:
+            print("The Database is already closed")
 
     def execute_sql(self, script):
         """"Executes a SQL script (useful for making the setup of a schema)"""
