@@ -4,14 +4,14 @@ function CustomTree {
         [int]$depth = 0,
         [bool]$isRoot = $true
     )
-    $items = Get-ChildItem -Path $basePath -Directory
+    $items = Get-ChildItem -Path $basePath -Directory | Where-Object { $_.Name -notmatch "__pycache__" }
     foreach ($item in $items) {
         $indent = '    ' * $depth  # Adjust indentation as needed
         $prefix = if ($isRoot) { "" } else { "|-- " }
 
         "$indent$prefix$($item.Name)"
 
-        if ($item.Name -ne "node_modules" -and $item.Name -notmatch "__pycache__") {
+        if ($item.Name -ne "node_modules") {
             CustomTree -basePath $item.FullName -depth ($depth + 1) -isRoot $false
         } elseif ($item.Name -eq "node_modules") {
             "$indent|   `--> ..."

@@ -2,7 +2,7 @@
     |-- backend
         |-- app
             |-- api
-                |-- __pycache__
+                |-- auth.py
                 |-- card_routes.py
                 |-- deck_routes.py
                 |-- user_routes.py
@@ -10,26 +10,29 @@
             |-- config
                 |-- development.py
                 |-- __init__.py
+            |-- mail
+                |-- templates
+                    |-- mail_verification.html
+                |-- mail.py
+                |-- __init__.py
             |-- structures
                 |-- card.py
                 |-- deck.py
                 |-- __init__.py
-            |-- __pycache__
             |-- app.py
             |-- __init__.py
         |-- db
-            |-- __pycache__
             |-- database.py
             |-- debug.py
             |-- __init__.py
         |-- env
-            |-- __pycache__
             |-- .env
             |-- __init__.py
-        |-- __pycache__
         |-- main.py
         |-- __init__.py
     |-- database
+        |-- aws
+            |-- database_setup.sh
         |-- data.db
         |-- schema.sql
     |-- documentation
@@ -40,7 +43,6 @@
     |-- frontend
         |-- node_modules
         |   --> ...
-        |-- public
         |-- src
             |-- Card
                 |-- createCard.html
@@ -72,4 +74,3 @@
             |-- install.ps1
             |-- setup.bat
     |-- .gitignore
-    |-- project_structure.bat
