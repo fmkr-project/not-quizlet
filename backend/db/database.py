@@ -11,11 +11,11 @@ DATABASE_INIT_SQL_LOCATION = getenv("DB_SCHEMA")
 
 
 ### Used if LOCAL_DATABASE = False
-DATABASE_ENDPOINT = getenv('DATABASE_ENDPOINT')
-DATABASE_PORT = int(getenv('DATABASE_PORT', 3306))
-DATABASE_USERNAME = getenv('DATABASE_USERNAME')
-DATABASE_PASSWORD = getenv('DATABASE_PASSWORD')
-DATABASE_NAME = getenv('DATABASE_NAME')
+AWS_DATABASE_ENDPOINT = getenv('AWS_DATABASE_ENDPOINT')
+AWS_DATABASE_PORT = int(getenv('AWS_DATABASE_PORT', 3306))
+AWS_DATABASE_USERNAME = getenv('AWS_DATABASE_USERNAME')
+AWS_DATABASE_PASSWORD = getenv('AWS_DATABASE_PASSWORD')
+AWS_DATABASE_NAME = getenv('AWS_DATABASE_NAME')
 
 ### JSON WEB-TOKENS
 JWT_SECRET_KEY = getenv("JWT_SECRET_KEY")
@@ -40,11 +40,11 @@ class Database:
             self.conn = sql.connect(self.db_path)
         else:
             db_config = {
-                'user': DATABASE_USERNAME,
-                'password': DATABASE_PASSWORD,
-                'host': DATABASE_ENDPOINT,
-                'port': DATABASE_PORT,
-                'database': DATABASE_NAME
+                'user': AWS_DATABASE_USERNAME,
+                'password': AWS_DATABASE_PASSWORD,
+                'host': AWS_DATABASE_ENDPOINT,
+                'port': AWS_DATABASE_PORT,
+                'database': AWS_DATABASE_NAME
             }
     def close(self):
         """Disconnect the database"""

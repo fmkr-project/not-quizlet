@@ -23,6 +23,7 @@
             |-- __init__.py
         |-- db
             |-- database.py
+            |-- database_test.py
             |-- debug.py
             |-- __init__.py
         |-- env
@@ -43,6 +44,7 @@
     |-- frontend
         |-- node_modules
         |   --> ...
+        |-- public
         |-- src
             |-- Card
                 |-- createCard.html
@@ -58,6 +60,8 @@
                 |-- script.js
                 |-- style.css
                 |-- viewDeck.html
+            |-- Login
+                |-- login.html
             |-- index.html
             |-- main.js
             |-- script.js
@@ -65,6 +69,7 @@
         |-- package-lock.json
         |-- package.json
     |-- setup
+        |-- db
         |-- unix
             |-- setup.sh
         |-- windows
@@ -74,3 +79,4 @@
             |-- install.ps1
             |-- setup.bat
     |-- .gitignore
+Project_Cpp
