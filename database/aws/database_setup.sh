@@ -18,4 +18,4 @@ source "$env_location"
 set +o allexport
 
 # Use environment variables to connect to the database
-mysql -h $DATABASE_ENDPOINT -P $DATABASE_PORT -u $MASTER_USERNAME_DATABASE -p$PASSWORD_DATABASE
+mysql -h $DATABASE_ENDPOINT -P $DATABASE_PORT -u $MASTER_USERNAME_DATABASE -p $PASSWORD_DATABASE
