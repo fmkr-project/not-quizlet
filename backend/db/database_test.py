@@ -3,72 +3,74 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import check_password_hash
+from sqlalchemy import text
 
 # Environment Variables
 USE_LOCAL_DATABASE_ENV = getenv("USE_LOCAL_DATABASE", "True").lower() == "true"
 DB_PATH = getenv("DB_PATH")
+DB_TEST_PATH = getenv("DB_TEST_PATH")
 DB_SCHEMA = getenv("DB_SCHEMA")
 AWS_DATABASE_ENDPOINT = getenv('AWS_DATABASE_ENDPOINT')
 AWS_DATABASE_PORT = getenv('AWS_DATABASE_PORT', '3306')
 AWS_DATABASE_USERNAME = getenv('AWS_DATABASE_USERNAME')
 AWS_DATABASE_PASSWORD = getenv('AWS_DATABASE_PASSWORD')
 AWS_DATABASE_NAME = getenv('AWS_DATABASE_NAME')
+AWS_DATABASE_TEST_NAME = getenv('AWS_DATABASE_TEST_NAME')
 JWT_SECRET_KEY = getenv("JWT_SECRET_KEY")
 
-# Database URI configuration
-if USE_LOCAL_DATABASE_ENV:
-    DATABASE_URI = f'sqlite:///{DB_PATH}'
-else:
-    DATABASE_URI = (
-        f"mysql+mysqlconnector://{AWS_DATABASE_USERNAME}:{AWS_DATABASE_PASSWORD}@"
-        f"{AWS_DATABASE_ENDPOINT}:{AWS_DATABASE_PORT}/"
-        f"{AWS_DATABASE_NAME}"
-    )
-
-# Create engine and session
-engine = create_engine(DATABASE_URI, echo=True)
-Session = sessionmaker(bind=engine)
-
 class Database_test:
-    def __init__(self):
+    def __init__(self, is_local = USE_LOCAL_DATABASE_ENV, is_test = True):
         """Creates an instance of the database class to make operations on the database"""
+        self.is_test = is_test
+        self.is_local = is_local
+        if is_local:
+            self.database_uri = f'sqlite:///{DB_TEST_PATH if is_test else DB_PATH}'
+        else:
+            self.database_uri = (
+                f"mysql+mysqlconnector://{AWS_DATABASE_USERNAME}:{AWS_DATABASE_PASSWORD}@"
+                f"{AWS_DATABASE_ENDPOINT}:{AWS_DATABASE_PORT}/"
+                f"{AWS_DATABASE_TEST_NAME if is_test else AWS_DATABASE_NAME}")
+        self.engine = create_engine(self.database_uri, echo=True)
+        self.Session = sessionmaker(bind=self.engine)
         self.session = None
     def __repr__(self):
         """Representation of an instance of the Database class"""
-        is_local = USE_LOCAL_DATABASE_ENV
         is_connected = self.session is not None
-        if is_local:
-            s = f"<Database object:
+        if self.is_local:
+            s = f"""<Database object:
+        - Test Database = {self.is_test},
         - Connection = {is_connected},
-        - Local = {USE_LOCAL_DATABASE_ENV}>"
+        - Local = {self.is_local}>"""
         else:
-            s = f"<Database object:
+            s = f"""<Database object:
+        - Test Database = {self.is_test},
         - Connection = {is_connected},
-        - Host = {AWS_DATABASE_ENDPOINT}>,
+        - Host = {AWS_DATABASE_ENDPOINT},
         - Port = {AWS_DATABASE_PORT},
         - User = {AWS_DATABASE_USERNAME},
-        - Database = {AWS_DATABASE_NAME}"
+        - Database = {AWS_DATABASE_NAME}>"""
         return s
 
     def connect(self):
         """Connect to the database"""
-        self.session = Session()
+        self.session = self.Session()
     def close(self):
         """Disconnect the database"""
         if self.session:
             self.session.close()
+            self.session = None
         else:
             return False
 
-    def execute_query(self, query, params=None, data_manip=True):
+    def execute_query(self, query, params={}, data_manip=True):
         """Execute an SQL query"""
         try:
             self.connect()
             if data_manip:
-                self.session.execute(query, params or {})
+                self.session.execute(text(query), params)
                 self.session.commit()
             else:
-                result = self.session.execute(query, params or {}).fetchall()
+                result = self.session.execute(text(query), params).fetchall()
                 return result
         except SQLAlchemyError as e:
             print(f"An error occurred: {e}")
@@ -87,7 +89,7 @@ class Database_test:
             for statement in sql_script.split(';'):
                 # Skipping empty statements (useful when script contains newline characters)
                 if statement.strip():
-                    self.session.execute(statement.strip())
+                    self.session.execute(text(statement.strip()))
             self.session.commit()
         except SQLAlchemyError as e:
             print(f"An error occurred while executing SQL script: {e}")
@@ -98,6 +100,16 @@ class Database_test:
             raise
         finally:
             self.close()
+    def show_all_tables(self):
+        """Shows all the tables of the database"""
+        if self.is_local:
+            with self.engine.connect() as conn:
+                result = conn.execute(text("SELECT name FROM sqlite_master WHERE type='table'"))
+                tables = [row[0] for row in result]
+            return tables
+        else:
+            query = "SHOW tables"
+            return self.execute_query(query)
 
     def create_card(self, front_side, back_side):
         """Create a new card"""
