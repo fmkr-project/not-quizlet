@@ -3,4 +3,5 @@ Werkzeug
 python-dotenv
 pyjwt
 flask_mail
-mysql-connector-python
+sqlalchemy
+pytest
