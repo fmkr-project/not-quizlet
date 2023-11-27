@@ -1,4 +1,11 @@
 ﻿not-quizlet
+    |-- .pytest_cache
+        |-- v
+            |-- cache
+                |-- nodeids
+                |-- stepwise
+        |-- .gitignore
+        |-- CACHEDIR.TAG
     |-- backend
         |-- app
             |-- api
@@ -22,6 +29,8 @@
             |-- app.py
             |-- __init__.py
         |-- db
+            |-- deprecated
+                |-- debug_bis.py
             |-- database.py
             |-- database_test.py
             |-- debug.py
@@ -32,9 +41,8 @@
         |-- main.py
         |-- __init__.py
     |-- database
-        |-- aws
-            |-- database_setup.sh
         |-- data.db
+        |-- data_test.db
         |-- schema.sql
     |-- documentation
         |-- doc_scripts
@@ -44,7 +52,6 @@
     |-- frontend
         |-- node_modules
         |   --> ...
-        |-- public
         |-- src
             |-- Card
                 |-- createCard.html
@@ -69,7 +76,6 @@
         |-- package-lock.json
         |-- package.json
     |-- setup
-        |-- db
         |-- unix
             |-- setup.sh
         |-- windows
@@ -79,4 +85,3 @@
             |-- install.ps1
             |-- setup.bat
     |-- .gitignore
-Project_Cpp

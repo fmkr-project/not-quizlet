@@ -1,16 +1,17 @@
 """Main entry point"""
 import env
-from db import my_db, run_tests, my_db_test
-from app import api_blueprint, my_app
-#from app import create_app     
+from db import my_db, run_tests
+from app import my_app  
 from os import *
-import unittest
 
 API_VERSION = getenv("API_VERSION")      
 if __name__ == '__main__' :
-    # Create the db if it does not exist
-    print(my_db_test.show_all_tables())
+    #my_db.reset()
+    #my_db.execute_sql()
     #run_tests()
+    my_app.run()
+    #result = my_db.execute_query("SELECT id, username FROM users", data_manip=False)
+    #print(result)
     
 
 
