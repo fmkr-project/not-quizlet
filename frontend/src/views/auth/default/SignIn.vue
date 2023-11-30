@@ -6,9 +6,8 @@
           <b-col md="10">
             <b-card class="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card iq-auth-form">
               <router-link :to="{ name: 'default.dashboard' }" class="navbar-brand d-flex align-items-center mb-3 text-primary">
-                <div>
-                  <img src=".\favicon-32x32.png" style="width: 15%;">
-                </div>
+                <!--<brand-logo></brand-logo> -->
+                <img src="..\..\..\..\public\img\icons\icon_small.png">
                 <h4 class="logo-title ms-3 mb-0" data-setting="app_name"><brand-name></brand-name></h4>
               </router-link>
               <h2 class="mb-2 text-center">Sign In</h2>
@@ -43,7 +42,7 @@
             </b-card>
           </b-col>
         </b-row>
-        <div class="sign-bg">
+        <!--<div class="sign-bg">
           <svg width="280" height="230" viewBox="0 0 431 398" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g opacity="0.05">
               <rect x="-157.085" y="193.773" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 -157.085 193.773)" fill="#3B8AFF" />
@@ -52,7 +51,7 @@
               <rect x="62.3154" y="-190.173" width="543" height="77.5714" rx="38.7857" transform="rotate(45 62.3154 -190.173)" fill="#3B8AFF" />
             </g>
           </svg>
-        </div>
+        </div>-->
       </b-col>
       <div class="col-md-6 d-md-block d-none bg-primary p-0 vh-100 overflow-hidden">
         <img src="@/assets/images/auth/01.png" class="img-fluid gradient-main animated-scaleX" alt="images" loading="lazy" />
