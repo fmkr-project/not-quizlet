@@ -27,3 +27,18 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
+def logout_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = request.headers.get('Authorization')
+        if token:
+            try:
+                jwt.decode(token, secret_key, algorithms=['HS256'])
+                # If this point is reached, the user is authenticated
+                return jsonify({'message': 'You are already logged in'}), 403
+            except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
+                # Token is invalid or expired, allow the request
+                pass
+        return f(*args, **kwargs)
+    return decorated_function

@@ -4,6 +4,7 @@ from .deck_routes import deck_blueprint
 from .card_routes import card_blueprint
 from .test_routes import test_blueprint
 from os import getenv
+from .mail import my_mail
 API_VERSION = getenv("API_VERSION")
 
 api_blueprint = Blueprint(API_VERSION, __name__, url_prefix='/api')

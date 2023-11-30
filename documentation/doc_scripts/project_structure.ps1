@@ -4,7 +4,7 @@ function CustomTree {
         [int]$depth = 0,
         [bool]$isRoot = $true
     )
-    $items = Get-ChildItem -Path $basePath -Directory | Where-Object { $_.Name -notmatch "__pycache__" }
+    $items = Get-ChildItem -Path $basePath -Directory | Where-Object { $_.Name -notmatch "__pycache__" } | Where-Object { $_.Name -notmatch ".pytest_cache" }
     foreach ($item in $items) {
         $indent = '    ' * $depth  # Adjust indentation as needed
         $prefix = if ($isRoot) { "" } else { "|-- " }

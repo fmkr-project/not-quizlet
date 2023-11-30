@@ -1,17 +1,11 @@
 ﻿not-quizlet
-    |-- .pytest_cache
-        |-- v
-            |-- cache
-                |-- nodeids
-                |-- stepwise
-        |-- .gitignore
-        |-- CACHEDIR.TAG
     |-- backend
         |-- app
             |-- api
                 |-- auth.py
                 |-- card_routes.py
                 |-- deck_routes.py
+                |-- test_routes.py
                 |-- user_routes.py
                 |-- __init__.py
             |-- config
@@ -20,6 +14,7 @@
             |-- mail
                 |-- templates
                     |-- mail_verification.html
+                    |-- Nouveau modèle 2.html
                 |-- mail.py
                 |-- __init__.py
             |-- structures
@@ -30,15 +25,16 @@
             |-- __init__.py
         |-- db
             |-- deprecated
+                |-- database.py
                 |-- debug_bis.py
             |-- database.py
-            |-- database_test.py
             |-- debug.py
             |-- __init__.py
         |-- env
             |-- .env
             |-- __init__.py
         |-- main.py
+        |-- test.py
         |-- __init__.py
     |-- database
         |-- data.db
@@ -52,29 +48,6 @@
     |-- frontend
         |-- node_modules
         |   --> ...
-        |-- src
-            |-- Card
-                |-- createCard.html
-                |-- deleteCard.html
-                |-- modifyCard.html
-                |-- script.js
-                |-- style.css
-                |-- viewCard.html
-            |-- Deck
-                |-- createDeck.html
-                |-- deleteDeck.html
-                |-- modifyDeck.html
-                |-- script.js
-                |-- style.css
-                |-- viewDeck.html
-            |-- Login
-                |-- login.html
-            |-- index.html
-            |-- main.js
-            |-- script.js
-            |-- style.css
-        |-- package-lock.json
-        |-- package.json
     |-- setup
         |-- unix
             |-- setup.sh

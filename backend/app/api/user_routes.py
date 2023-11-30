@@ -1,13 +1,15 @@
-from flask import Blueprint, request, jsonify, g
+from flask import Blueprint, request, jsonify, g, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from os import urandom
-from .auth import login_required
+from .auth import login_required, logout_required
 from db import my_db
+from .mail import send_verification_email
 import jwt
 from datetime import datetime, timedelta
 from dateutil import parser
 from os import getenv
 
+USE_MAIL_VERIFICATION = getenv('USE_MAIL_VERIFICATION').lower == 'true'
 JWT_SECRET_KEY = getenv("JWT_SECRET_KEY")
 
 def get_user_id_from_token():
@@ -22,24 +24,44 @@ def get_user_id_from_token():
 user_blueprint = Blueprint('users', __name__)
 
 @user_blueprint.route('/register', methods=['POST'])
+@logout_required
 def register_user():
     data = request.json
     username = data.get('username')
     email = data.get('email')
     client_hashed_password = data.get('password')  # Already hashed by client
+
     if not username or not email or not client_hashed_password:
         return jsonify({'error': 'Missing fields'}), 400
+
     if my_db.user_exists_already(username=username, email=email)['any']:
         return jsonify({'error': 'Username or Email already registered'}), 409
+
     salt = urandom(16).hex()
     server_hash = generate_password_hash(client_hashed_password + salt)
-    try: 
-        my_db.register_user(username, email, server_hash, salt)
-        return jsonify({'message': 'User registered successfully'}), 201
-    except:
-        return jsonify({'error': 'Registration failed'}), 500
+
+    try:
+        user_id = my_db.register_user(username, email, server_hash, salt)
+        user_id = my_db.get_user_id_from_identifier(email)
+        if USE_MAIL_VERIFICATION:
+            # Generate, store, and send verification token
+            exp = datetime.utcnow() + timedelta(hours=24)
+            token = jwt.encode({'user_id': user_id, 'exp': exp},
+                               getenv('JWT_SECRET_KEY'), algorithm='HS256')
+            my_db.store_verification_token(user_id, token, exp.isoformat())
+            send_verification_email(email, token)
+            message = 'User registered successfully. Please check your email to verify your account.'
+        else:
+            # Auto-verify user in the database
+            my_db.mark_user_as_verified(user_id)  # Implement this function
+            message = 'User registered successfully.'
+
+        return jsonify({'message': message}), 201
+    except Exception as e:
+        return jsonify({'error': 'Registration failed', 'details': str(e)}), 500
 
 @user_blueprint.route('/login', methods=['POST'])
+@logout_required
 def login_user():
     data = request.json
     email = data.get('email')  
