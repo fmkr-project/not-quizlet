@@ -10,12 +10,12 @@ USE_LOCAL_DATABASE_ENV = getenv("USE_LOCAL_DATABASE", "True").lower() == "true"
 DB_PATH = getenv("DB_PATH")
 DB_TEST_PATH = getenv("DB_TEST_PATH")
 DB_SCHEMA = getenv("DB_SCHEMA")
-AWS_DATABASE_ENDPOINT = getenv('AWS_DATABASE_ENDPOINT')
-AWS_DATABASE_PORT = getenv('AWS_DATABASE_PORT', '3306')
-AWS_DATABASE_USERNAME = getenv('AWS_DATABASE_USERNAME')
-AWS_DATABASE_PASSWORD = getenv('AWS_DATABASE_PASSWORD')
-AWS_DATABASE_NAME = getenv('AWS_DATABASE_NAME')
-AWS_DATABASE_TEST_NAME = getenv('AWS_DATABASE_TEST_NAME')
+PG_DATABASE_ENDPOINT = getenv('PG_DATABASE_ENDPOINT')
+PG_DATABASE_PORT = getenv('PG_DATABASE_PORT', '3306')
+PG_DATABASE_USERNAME = getenv('PG_DATABASE_USERNAME')
+PG_DATABASE_PASSWORD = getenv('PG_DATABASE_PASSWORD')
+PG_DATABASE_NAME = getenv('PG_DATABASE_NAME')
+PG_DATABASE_TEST_NAME = getenv('PG_DATABASE_TEST_NAME')
 JWT_SECRET_KEY = getenv("JWT_SECRET_KEY")
 
 class Database:
@@ -27,9 +27,9 @@ class Database:
             self.database_uri = f'sqlite:///{DB_TEST_PATH if is_test else DB_PATH}'
         else:
             self.database_uri = (
-                f"mysql+mysqlconnector://{AWS_DATABASE_USERNAME}:{AWS_DATABASE_PASSWORD}@"
-                f"{AWS_DATABASE_ENDPOINT}:{AWS_DATABASE_PORT}/"
-                f"{AWS_DATABASE_TEST_NAME if is_test else AWS_DATABASE_NAME}")
+                f"postgres://{PG_DATABASE_USERNAME}:{PG_DATABASE_PASSWORD}@"
+                f"{PG_DATABASE_ENDPOINT}:{PG_DATABASE_PORT}/"
+                f"{PG_DATABASE_TEST_NAME if is_test else PG_DATABASE_NAME}")
         self.engine = create_engine(self.database_uri, echo=True)
         self.Session = sessionmaker(bind=self.engine)
         self.session = None
@@ -47,10 +47,10 @@ class Database:
             s = f"""<Database object:
         - Test Database = {self.is_test},
         - Connection = {is_connected},
-        - Host = {AWS_DATABASE_ENDPOINT},
-        - Port = {AWS_DATABASE_PORT},
-        - User = {AWS_DATABASE_USERNAME},
-        - Database = {AWS_DATABASE_NAME}
+        - Host = {PG_DATABASE_ENDPOINT},
+        - Port = {PG_DATABASE_PORT},
+        - User = {PG_DATABASE_USERNAME},
+        - Database = {PG_DATABASE_NAME}
         - Database URI = {self.database_uri}>"""
         return s
 
