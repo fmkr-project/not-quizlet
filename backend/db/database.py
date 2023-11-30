@@ -321,4 +321,4 @@ class Database:
     def mark_user_as_verified(self, user_id):
         query = 'UPDATE users SET is_email_verified = 1 WHERE id = :user_id'
         params = {'user_id': user_id}
-        self.execute_query()
+        self.execute_query(query, params)

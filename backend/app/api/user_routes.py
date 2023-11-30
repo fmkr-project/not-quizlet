@@ -53,7 +53,7 @@ def register_user():
             message = 'User registered successfully. Please check your email to verify your account.'
         else:
             # Auto-verify user in the database
-            my_db.mark_user_as_verified(user_id)  # Implement this function
+            my_db.mark_user_as_verified(user_id)  
             message = 'User registered successfully.'
 
         return jsonify({'message': message}), 201
