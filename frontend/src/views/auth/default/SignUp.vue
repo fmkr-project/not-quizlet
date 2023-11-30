@@ -63,23 +63,6 @@
                   <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                   </div>
-                  <p class="text-center my-3">or sign in with other accounts?</p>
-                  <div class="d-flex justify-content-center">
-                    <ul class="list-group list-group-horizontal list-group-flush">
-                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="@/assets/images/brands/fb.svg" alt="fb" loading="lazy" /></a>
-                      </li>
-                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="@/assets/images/brands/gm.svg" alt="gm" loading="lazy" /></a>
-                      </li>
-                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="@/assets/images/brands/im.svg" alt="im" loading="lazy" /></a>
-                      </li>
-                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="@/assets/images/brands/li.svg" alt="li" loading="lazy" /></a>
-                      </li>
-                    </ul>
-                  </div>
                   <p class="mt-3 text-center">Already have an Account <a href="/auth/login" class="text-underline">Sign In</a></p>
                 </form>
               </div>

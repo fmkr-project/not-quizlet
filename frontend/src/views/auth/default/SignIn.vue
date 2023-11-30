@@ -6,7 +6,9 @@
           <b-col md="10">
             <b-card class="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card iq-auth-form">
               <router-link :to="{ name: 'default.dashboard' }" class="navbar-brand d-flex align-items-center mb-3 text-primary">
-                <brand-logo></brand-logo>
+                <div>
+                  <img src=".\favicon-32x32.png" style="width: 15%;">
+                </div>
                 <h4 class="logo-title ms-3 mb-0" data-setting="app_name"><brand-name></brand-name></h4>
               </router-link>
               <h2 class="mb-2 text-center">Sign In</h2>
@@ -35,23 +37,6 @@
                 </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-primary">Sign In</button>
-                </div>
-                <p class="text-center my-3">or sign in with other accounts?</p>
-                <div class="d-flex justify-content-center">
-                  <ul class="list-group list-group-horizontal list-group-flush">
-                    <li class="list-group-item border-0 pb-0">
-                      <a href="#"><img src="@/assets/images/brands/fb.svg" alt="fb" loading="lazy" /></a>
-                    </li>
-                    <li class="list-group-item border-0 pb-0">
-                      <a href="#"><img src="@/assets/images/brands/gm.svg" alt="gm" loading="lazy" /></a>
-                    </li>
-                    <li class="list-group-item border-0 pb-0">
-                      <a href="#"><img src="@/assets/images/brands/im.svg" alt="im" loading="lazy" /></a>
-                    </li>
-                    <li class="list-group-item border-0 pb-0">
-                      <a href="#"><img src="@/assets/images/brands/li.svg" alt="li" loading="lazy" /></a>
-                    </li>
-                  </ul>
                 </div>
                 <p class="mt-3 text-center">Don’t have an account? <a href="/auth/register" class="text-underline">Click here to sign up.</a></p>
               </form>
