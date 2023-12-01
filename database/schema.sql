@@ -74,14 +74,4 @@ CREATE TABLE IF NOT EXISTS "failed_login_attempts" (
 CREATE INDEX "idx_failed_login_user_id" ON "failed_login_attempts"("user_id");
 CREATE INDEX "idx_failed_login_ip_address" ON "failed_login_attempts"("ip_address");
 
---- Email Verification Tokens Table
-CREATE TABLE IF NOT EXISTS "email_verification_tokens" (
-    "user_id" INTEGER NOT NULL,
-    "token" TEXT NOT NULL,
-    "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "expires_at" TIMESTAMP NOT NULL,
-    PRIMARY KEY ("user_id", "token"),
-    FOREIGN KEY ("user_id") REFERENCES "users"("id")
-);
-CREATE INDEX "idx_email_verification_tokens_user_id" ON "email_verification_tokens"("user_id");
 

@@ -312,13 +312,11 @@ class Database:
         query = "UPDATE failed_login_attempts SET attempts = 0 WHERE user_id = :user_id AND ip_address = :ip_address"
         self.execute_query(query, {'user_id': user_id, 'ip_address': ip_address}, True)
 
-    def store_verification_token(self, user_id, token, exp):
-        """Stores a verification token for mail verification"""
-        query = """INSERT INTO email_verification_tokens (user_id, token, created_at, expires_at)
-        VALUES (:user_id, :token, CURRENT_TIMESTAMP, :exp)"""
-        params = {'user_id': user_id, 'token': token, 'exp': exp}
-        self.execute_query(query, params)
     def mark_user_as_verified(self, user_id):
         query = 'UPDATE users SET is_email_verified = 1 WHERE id = :user_id'
         params = {'user_id': user_id}
         self.execute_query(query, params)
+    def is_user_verified(self, user_id):
+        query = "SELECT is_verified FROM users WHERE id = :user_id"
+        params = {'user_id': user_id}
+        return self.execute_query(query, params)[0]['is_verified']
