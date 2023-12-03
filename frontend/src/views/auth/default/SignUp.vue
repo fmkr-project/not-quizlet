@@ -84,6 +84,40 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router'; // Import the router instance
+
+const username = ref('');
+const email = ref('');
+const password = ref('');
+const $router = useRouter(); // Access the router instance
+
+/* eslint-disable no-unused-vars */ // Disable the 'no-unused-vars' ESLint rule for this section
+
+// Define a function to handle user registration
+const handleRegistration = async () => {
+  const userData = {
+    username: username.value,
+    email: email.value,
+    password: password.value,
+  };
+
+  try {
+    // Make an HTTP POST request to your Flask API endpoint
+    const response = await axios.post('http://127.0.0.1:5001/api/register', userData);
+
+    // Handle the response (e.g., show a success message)
+    console.log('Registration successful:', response.data.message);
+
+    // Redirect to a different page (e.g., login page)
+    $router.push('/auth/login');
+  } catch (error) {
+    // Handle errors (e.g., display an error message)
+    console.error('Registration error:', error);
+  }
+};
+</script>
 
 <style lang="scss" scoped></style>
