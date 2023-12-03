@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; margin: 0; }
+        .container { background-color: #ffffff; padding: 20px; margin: 20px auto; width: 90%; max-width: 600px; border-radius: 8px; text-align: center; }
+        .logo { max-width: 300px; margin: 20px auto; }
+        .bar { height: 4px; background-color: #4CAF50; margin: 20px auto; width: 80%; }
+        .verify-button { background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 18px; display: inline-block; margin: 20px 0; }
+        .verify-button:hover { background-color: #45a049; }
+        p { color: #333333; margin: 10px 0; font-size: 14px; }
+
+        @media only screen and (min-width: 768px) {
+            p { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://elasticbeanstalk-eu-west-3-625039870308.s3.eu-west-3.amazonaws.com/learnwithpima.png" alt="LearnWithPima Logo" class="logo">
+        <div class="bar"></div>
+        <p>Thank you for registering with LearnWithPima. To complete your registration, please click the button below to verify your email address:</p>
+        <a href="{{ verification_link }}" class="verify-button" style="color: white; text-decoration: none;">Verify Your Email</a>
+        <p>Once verified, you can fully enjoy our services.</p>
+        <p>If you can't see the button, please copy and paste the following link into your browser:</p>
+        <p><a href="{{ verification_link }}">{{ verification_link }}</a></p>
+    </div>
+</body>
+</html>

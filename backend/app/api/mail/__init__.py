@@ -1,1 +1,1 @@
-from .mail import send_verification_email, my_mail
+from .mail import send_verification_email, send_reset_password_email

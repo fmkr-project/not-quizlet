@@ -1,8 +1,8 @@
 Flask
+Flask-limiter
 Werkzeug
 python-dotenv
 pyjwt
-flask_mail
 sqlalchemy
 pytest
 datetime

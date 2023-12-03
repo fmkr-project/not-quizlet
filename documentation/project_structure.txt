@@ -3,14 +3,13 @@
         |-- app
             |-- api
                 |-- mail
-                    |-- templates
-                        |-- mail_verification.html
-                        |-- Nouveau modèle 2.html
                     |-- mail.py
                     |-- __init__.py
                 |-- auth.py
                 |-- card_routes.py
+                |-- database_routes.py
                 |-- deck_routes.py
+                |-- public_routes.py
                 |-- test_routes.py
                 |-- user_routes.py
                 |-- __init__.py
@@ -21,6 +20,9 @@
                 |-- card.py
                 |-- deck.py
                 |-- __init__.py
+            |-- templates
+                |-- mail_verification.html
+                |-- password_reset.html
             |-- app.py
             |-- __init__.py
         |-- db
@@ -63,6 +65,7 @@
                     |-- apple-touch-icon.png
                     |-- favicon-16x16.png
                     |-- favicon-32x32.png
+                    |-- icon_small.png
                     |-- msapplication-icon-144x144.png
                     |-- mstile-150x150.png
                     |-- safari-pinned-tab.svg
@@ -1550,24 +1553,3 @@
             |-- install.ps1
             |-- setup.bat
     |-- .gitignore
-src
-    |-- Card
-        |-- createCard.html
-        |-- deleteCard.html
-        |-- modifyCard.html
-        |-- script.js
-        |-- style.css
-        |-- viewCard.html
-    |-- Deck
-        |-- createDeck.html
-        |-- deleteDeck.html
-        |-- modifyDeck.html
-        |-- script.js
-        |-- style.css
-        |-- viewDeck.html
-    |-- Login
-        |-- login.html
-    |-- index.html
-    |-- main.js
-    |-- script.js
-    |-- style.css

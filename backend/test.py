@@ -5,11 +5,11 @@ from email.mime.text import MIMEText
 # SMTP server configuration
 smtp_server = 'send.one.com'  # e.g., smtp.gmail.com for Gmail
 smtp_port = 587  # For TLS
-smtp_username = 'verify-noreply@learnwithpima.fr'
+smtp_username = 'noreply@learnwithpima.fr'
 smtp_password = 'pimapassword123'
 
 # Sender's and Receiver's email address
-from_email = 'verify-noreply@learnwithpima.fr'
+from_email = 'noreply@learnwithpima.fr'
 to_email = 'skoukou007@gmail.com'
 
 # Create message

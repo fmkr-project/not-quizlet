@@ -1,25 +1,18 @@
 from flask import Blueprint, request, jsonify, g, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from os import urandom
-from .auth import login_required, logout_required
+from .auth import login_required, logout_required, get_user_id_from_token
 from db import my_db
 from .mail import send_verification_email
 import jwt
 from datetime import datetime, timedelta
 from dateutil import parser
 from os import getenv
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
-USE_MAIL_VERIFICATION = getenv('USE_MAIL_VERIFICATION').lower == 'true'
+USE_MAIL_VERIFICATION = getenv('USE_MAIL_VERIFICATION').lower() == 'true'
 JWT_SECRET_KEY = getenv("JWT_SECRET_KEY")
-
-def get_user_id_from_token():
-    token = request.headers.get('Authorization').split(" ")[1]
-    try:
-        decoded = jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
-        return decoded.get('user_id')
-    except (jwt.DecodeError, jwt.ExpiredSignatureError):
-        return None
-
 
 user_blueprint = Blueprint('users', __name__)
 
@@ -44,11 +37,10 @@ def register_user():
         user_id = my_db.register_user(username, email, server_hash, salt)
         user_id = my_db.get_user_id_from_identifier(email)
         if USE_MAIL_VERIFICATION:
-            # Generate, store, and send verification token
+            # Generate and send verification token
             exp = datetime.utcnow() + timedelta(hours=24)
             token = jwt.encode({'user_id': user_id, 'exp': exp},
                                getenv('JWT_SECRET_KEY'), algorithm='HS256')
-            my_db.store_verification_token(user_id, token, exp.isoformat())
             send_verification_email(email, token)
             message = 'User registered successfully. Please check your email to verify your account.'
         else:
@@ -58,6 +50,7 @@ def register_user():
 
         return jsonify({'message': message}), 201
     except Exception as e:
+        logging.exception("Registration failed: %s", e)
         return jsonify({'error': 'Registration failed', 'details': str(e)}), 500
 
 @user_blueprint.route('/login', methods=['POST'])
@@ -84,7 +77,6 @@ def login_user():
 
     # Check for failed attempts and delay for the current IP
     failed_attempts = my_db.get_failed_attempts_for_ip(user_id, client_ip)
-    print(failed_attempts)
     if failed_attempts and failed_attempts['attempts'] >= 3:
         last_failed_login = failed_attempts['last_failed_login']
         print(last_failed_login)
@@ -95,7 +87,8 @@ def login_user():
             return jsonify({'error': f'Too many failed attempts from this IP. Try again in {delay} seconds.'}), 429
 
     user = my_db.login_user(email, client_hashed_password)
-    print(user)
+    if USE_MAIL_VERIFICATION and user and not my_db.is_user_verified(user_id):
+        return jsonify({'error': 'Email not verified.'}), 401
     if user:
         my_db.reset_failed_attempts(user_id, client_ip)  # Reset on successful login
         token = jwt.encode({

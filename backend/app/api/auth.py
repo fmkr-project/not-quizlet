@@ -4,6 +4,13 @@ from functools import wraps
 from os import getenv
 secret_key = getenv("JWT_SECRET_KEY")
 
+def get_user_id_from_token():
+    token = request.headers.get('Authorization').split(" ")[1]
+    try:
+        decoded = jwt.decode(token, secret_key, algorithms=['HS256'])
+        return decoded.get('user_id')
+    except (jwt.DecodeError, jwt.ExpiredSignatureError):
+        return None
 
 def login_required(f):
     @wraps(f)
