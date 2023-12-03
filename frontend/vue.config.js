@@ -10,5 +10,9 @@ module.exports = defineConfig({
       enableInSFC: false
     }
   },
-  transpileDependencies: true
+  transpileDependencies: true,
+  devServer: {
+    port: 5001, 
+    host: '127.0.0.1'
+  }
 })
