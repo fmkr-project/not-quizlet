@@ -76,6 +76,61 @@
   </section>
 </template>
 
-<script setup></script>
+<script>
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+import axios from "axios";
+
+export default {
+  name: 'LoginComponent',
+  setup() {
+    const router = useRouter();
+    const email = ref('');
+    const password = ref('');
+    const hasError = ref(false);
+    const rememberMe = ref(false);
+
+    const toHomeDashboard = async () => {
+      try {
+        const response = await axios.post("http://127.0.0.1:5001/api/login", {
+          email: email.value,
+          password: password.value
+        });
+
+        if (response.data.user.email === email.value) {
+          // Authentication successful
+          localStorage.setItem("token", response.data.user.token);
+          console.log("Redirecting to the dashboard");
+
+          if (rememberMe.value) {
+            localStorage.setItem("rememberMe", "true");
+          } else {
+            localStorage.removeItem("rememberMe");
+          }
+
+          router.push({ name: "default.dashboard" });
+        } else {
+          // Authentication failed
+          hasError.value = true;
+          console.error("Invalid credentials");
+        }
+      } catch (error) {
+        hasError.value = true;
+        console.error("Error:", error);
+      }
+    };
+
+    // Return the reactive properties and methods to use in the template
+    return {
+      email,
+      password,
+      hasError,
+      rememberMe,
+      toHomeDashboard
+    };
+  }
+};
+</script>
+
 
 <style lang="scss" scoped></style>
