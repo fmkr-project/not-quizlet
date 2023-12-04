@@ -1,0 +1,48 @@
+{
+    "name": "flashcard-app-frontend",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
+    },
+    "dependencies": {
+        "axios": "latest",
+        "core-js": "latest",
+        "socket.io-client": "latest",
+        "vue": "latest",
+        "vue-router": "latest",
+        "vuex": "latest"
+    },
+    "devDependencies": {
+        "@babel/core": "latest",
+        "@babel/eslint-parser": "latest",
+        "@vue/cli-plugin-babel": "latest",
+        "@vue/cli-plugin-eslint": "latest",
+        "@vue/cli-service": "latest",
+        "@vue/compiler-sfc": "latest",
+        "eslint": "latest",
+        "eslint-plugin-vue": "latest"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/vue3-essential",
+            "eslint:recommended"
+        ],
+        "parserOptions": {
+            "parser": "@babel/eslint-parser",
+            "requireConfigFile": false
+        },
+        "rules": {}
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
+}
