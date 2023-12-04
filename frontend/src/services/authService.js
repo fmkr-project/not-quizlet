@@ -1,0 +1,67 @@
+import axios from 'axios';
+
+const API_URL = 'http://127.0.0.1:5001/api/users/';
+
+class AuthService {
+    async register(user) {
+        try {
+            const response = await axios.post(API_URL + 'register', {
+                username: user.username,
+                email: user.email,
+                password: user.password
+            });
+            return { success: true, message: response.data.message };
+        } catch (error) {
+            let message = 'Registration failed';
+            if (error.response) {
+                switch (error.response.status) {
+                    case 400:
+                        message = 'Please fill in all the fields.';
+                        break;
+                    case 409:
+                        message = 'Username or Email already registered.';
+                        break;
+                    case 500:
+                    default:
+                        message = 'An error occurred during registration.';
+                        break;
+                }
+            }
+            return { success: false, message };
+        }
+    }
+
+    async login(user) {
+        try {
+            const response = await axios.post(API_URL + 'login', {
+                email: user.email,
+                password: user.password
+            });
+            return { success: true, token: response.data.token };
+        } catch (error) {
+            let message = 'Login failed';
+            if (error.response) {
+                switch (error.response.status) {
+                    case 400:
+                        message = 'Please fill in all the fields.';
+                        break;
+                    case 401:
+                        message = error.response.data.error || 'Invalid credentials or email not verified.';
+                        break;
+                    case 403:
+                        message = 'Account is locked due to suspicious activity.';
+                        break;
+                    case 429:
+                        message = error.response.data.error || 'Too many failed attempts. Try again later.';
+                        break;
+                    default:
+                        message = 'An error occurred during login.';
+                        break;
+                }
+            }
+            return { success: false, message };
+        }
+    }
+
+
+}
