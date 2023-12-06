@@ -53,10 +53,6 @@
                 |-- Login-Form-Basic-icons.css
                 |-- styles.css
             |-- img
-                |-- products
-                    |-- 1.jpg
-                    |-- 2.jpg
-                    |-- 3.jpg
                 |-- logo-nobg.png
             |-- js
                 |-- bold-and-bright.js
@@ -82,10 +78,20 @@
             |-- index.html
         |-- src
             |-- assets
-                |-- flashcard_example.gif
-                |-- header_logo.png
-                |-- logo-nobg.png
-                |-- logo.png
+                |-- bootstrap
+                    |-- css
+                        |-- bootstrap.min.css
+                |-- css
+                    |-- bs-theme-overrides.css
+                    |-- flashcard-examples.css
+                    |-- Login-Form-Basic-icons.css
+                    |-- styles.css
+                |-- img
+                    |-- logo-nobg.png
+                |-- js
+                    |-- bold-and-bright.js
+                    |-- bs-init.js
+                    |-- flashcard-example.js
             |-- components
                 |-- auth
                     |-- LoginForm.vue
@@ -97,6 +103,9 @@
                 |-- router.js
             |-- services
                 |-- authService.js
+            |-- styles
+                |-- header.css
+                |-- style.css
             |-- views
                 |-- HomePage.vue
                 |-- LoginPage.vue
@@ -106,6 +115,7 @@
         |-- package-lock.json
         |-- package.json
     |-- setup
+        |-- db
         |-- unix
             |-- setup.sh
         |-- windows
@@ -115,3 +125,4 @@
             |-- install.ps1
             |-- setup.bat
     |-- .gitignore
+Project_Cpp

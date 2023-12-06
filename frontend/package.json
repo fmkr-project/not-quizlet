@@ -12,9 +12,9 @@
         "core-js": "latest",
         "socket.io-client": "latest",
         "vue": "latest",
-        "vue-router": "^4.2.5",
+        "vue-router": "latest",
         "vuex": "latest",
-        "aos": "^3.0.0-beta.6"
+        "aos": "latest"
     },
     "devDependencies": {
         "@babel/core": "latest",
