@@ -3,7 +3,7 @@
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="/">
           <span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon" style="width: 100px;height: 100px;">
-            <img width="48" height="41" src="assets/img/logo-nobg.png" style="text-align: center;height: 73px;width: 73px;margin: 0px;padding: 0px;margin-top: -6px;margin-right: -1px;">
+            <img width="48" height="41" src="https://elasticbeanstalk-eu-west-3-625039870308.s3.eu-west-3.amazonaws.com/img/logo-nobg.png" style="text-align: center;height: 73px;width: 73px;margin: 0px;padding: 0px;margin-top: -6px;margin-right: -1px;">
           </span>
         </a>
         <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">

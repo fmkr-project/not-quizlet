@@ -1,4 +1,5 @@
 from flask import Blueprint
+from flask_cors import CORS
 from .user_routes import user_blueprint
 from .deck_routes import deck_blueprint
 from .card_routes import card_blueprint
@@ -24,3 +25,5 @@ public_api_blueprint.register_blueprint(public_blueprint)
 
 api_blueprint.register_blueprint(public_api_blueprint)
 api_blueprint.register_blueprint(private_api_blueprint)
+
+CORS(api_blueprint)
