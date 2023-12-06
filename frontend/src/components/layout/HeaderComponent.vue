@@ -25,7 +25,6 @@
             <li class="nav-item"></li>
             <li class="nav-item"></li>
           </ul>
-          <small style="margin-right: 70px;">ENG</small>
           <p class="navbar-text p-0 m-0">
             <a href="#"></a>
           </p>
