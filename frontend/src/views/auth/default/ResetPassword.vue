@@ -13,30 +13,69 @@
             </router-link>
             <h2 class="mb-2">Reset Password</h2>
             <p>Enter your email address and we'll send you an email with instructions to reset your password.</p>
-            <form>
+            <form @submit.prevent="resetPassword">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="floating-label form-group">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="email" placeholder=" " />
+                    <input type="email" class="form-control" id="email" v-model="email" aria-describedby="email" placeholder=" " />
                   </div>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary">Reset</button>
             </form>
+            <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
+            <p v-if="successMessage" class="text-success">{{ successMessage }}</p>
           </div>
         </div>
         <div class="sign-bg sign-bg-right">
-          <svg width="280" height="230" viewBox="0 0 431 398" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.05">
-              <rect x="-157.085" y="193.773" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 -157.085 193.773)" fill="#3B8AFF" />
-              <rect x="7.46875" y="358.327" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 7.46875 358.327)" fill="#3B8AFF" />
-              <rect x="61.9355" y="138.545" width="310.286" height="77.5714" rx="38.7857" transform="rotate(45 61.9355 138.545)" fill="#3B8AFF" />
-              <rect x="62.3154" y="-190.173" width="543" height="77.5714" rx="38.7857" transform="rotate(45 62.3154 -190.173)" fill="#3B8AFF" />
-            </g>
-          </svg>
+          <!-- SVG Background -->
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+
+const email = ref('');
+const errorMessage = ref('');
+const successMessage = ref('');
+
+const resetPassword = async () => {
+  errorMessage.value = '';
+  successMessage.value = '';
+
+  if (!email.value) {
+    errorMessage.value = 'Please enter your email address.';
+    return;
+  }
+  
+  try {
+    const response = await axios.post('http://127.0.0.1:5001/api/users/reset-password', {
+      email: email.value
+    });
+    
+    // Check if the backend response indicates that the email exists and the reset link was sent
+    if (response.data.message) {
+      successMessage.value = response.data.message;
+      // Optionally navigate to another page or show a success message
+    } else {
+      // Handle any other response
+      errorMessage.value = 'Unexpected response from the server.';
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      // Handle 404 Not Found
+      errorMessage.value = 'Email address not found.';
+    } else {
+      // Handle other errors
+      errorMessage.value = 'An error occurred while trying to reset the password.';
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped></style>
