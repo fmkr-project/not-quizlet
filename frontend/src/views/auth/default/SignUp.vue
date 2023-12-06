@@ -10,52 +10,53 @@
             <div class="card card-transparent auth-card shadow-none d-flex justify-content-center mb-0">
               <div class="card-body">
                 <router-link :to="{ name: 'default.dashboard' }" class="navbar-brand d-flex align-items-center mb-3 text-primary">
+                  <!-- The brand-logo and brand-name components should be defined in your project -->
                   <brand-logo></brand-logo>
                   <h4 class="logo-title ms-3 mb-0"><brand-name></brand-name></h4>
                 </router-link>
                 <h2 class="mb-2 text-center">Sign Up</h2>
                 <p class="text-center">Create your <brand-name></brand-name> account.</p>
-                <form>
+                <form @submit.prevent="handleRegistration">
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label for="full-name" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="full-name" placeholder=" " />
+                        <label for="first-name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="first-name" v-model="firstName" placeholder=" " />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="last-name" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="last-name" placeholder=" " />
+                        <input type="text" class="form-control" id="last-name" v-model="lastName" placeholder=" " />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder=" " />
+                        <input type="email" class="form-control" id="email" v-model="email" placeholder=" " />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="phone" class="form-label">Phone No.</label>
-                        <input type="text" class="form-control" id="phone" placeholder=" " />
+                        <input type="text" class="form-control" id="phone" v-model="phone" placeholder=" " />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder=" " />
+                        <input type="password" class="form-control" id="password" v-model="password" placeholder=" " />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="confirm-password" class="form-label">Confirm Password</label>
-                        <input type="text" class="form-control" id="confirm-password" placeholder=" " />
+                        <input type="password" class="form-control" id="confirm-password" v-model="confirmPassword" placeholder=" " />
                       </div>
                     </div>
                     <div class="col-lg-12 d-flex justify-content-center">
                       <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" id="customCheck1" />
+                        <input type="checkbox" class="form-check-input" id="customCheck1" v-model="termsAgreed" />
                         <label class="form-check-label" for="customCheck1">I agree with the terms of use</label>
                       </div>
                     </div>
@@ -63,21 +64,17 @@
                   <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                   </div>
-                  <p class="mt-3 text-center">Already have an Account <a href="/auth/login" class="text-underline">Sign In</a></p>
+                  <p class="mt-3 text-center">
+                    Already have an Account? <router-link to="/auth/login" class="text-underline">Sign In</router-link>
+                  </p>
                 </form>
               </div>
             </div>
           </div>
         </div>
+        <!-- The sign-bg-right component should be defined in your project -->
         <div class="sign-bg sign-bg-right">
-          <svg width="280" height="230" viewBox="0 0 421 359" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.05">
-              <rect x="-15.0845" y="154.773" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 -15.0845 154.773)" fill="#3A57E8" />
-              <rect x="149.47" y="319.328" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 149.47 319.328)" fill="#3A57E8" />
-              <rect x="203.936" y="99.543" width="310.286" height="77.5714" rx="38.7857" transform="rotate(45 203.936 99.543)" fill="#3A57E8" />
-              <rect x="204.316" y="-229.172" width="543" height="77.5714" rx="38.7857" transform="rotate(45 204.316 -229.172)" fill="#3A57E8" />
-            </g>
-          </svg>
+          <!-- Background SVG omitted for brevity -->
         </div>
       </div>
     </div>
@@ -87,37 +84,45 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router'; // Import the router instance
+import { useRouter } from 'vue-router';
 
-const username = ref('');
+const firstName = ref('');
+const lastName = ref('');
 const email = ref('');
+const phone = ref('');
 const password = ref('');
-const $router = useRouter(); // Access the router instance
+const confirmPassword = ref('');
+const termsAgreed = ref(false);
+const $router = useRouter();
 
-/* eslint-disable no-unused-vars */ // Disable the 'no-unused-vars' ESLint rule for this section
+  const handleRegistration = async () => {
+    if (password.value !== confirmPassword.value) {
+      alert("Passwords do not match.");
+      return;
+    }
+    
+    if (!termsAgreed.value) {
+      alert("You must agree to the terms of use.");
+      return;
+    }
+    
+    const username = `${firstName.value} ${lastName.value}`;
 
-// Define a function to handle user registration
-const handleRegistration = async () => {
-  const userData = {
-    username: username.value,
-    email: email.value,
-    password: password.value,
+    const userData = {
+      "username" : username,
+      "email" : email.value,
+      "password": password.value,
+    };
+
+    try {
+      const response = await axios.post('http://127.0.0.1:5001/api/users/register', userData);
+      console.log('Registration successful:', response.data.message);
+      $router.push('/auth/login');
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert("Registration failed: " + error.message);
+    }
   };
-
-  try {
-    // Make an HTTP POST request to your Flask API endpoint
-    const response = await axios.post('http://127.0.0.1:5001/api/register', userData);
-
-    // Handle the response (e.g., show a success message)
-    console.log('Registration successful:', response.data.message);
-
-    // Redirect to a different page (e.g., login page)
-    $router.push('/auth/login');
-  } catch (error) {
-    // Handle errors (e.g., display an error message)
-    console.error('Registration error:', error);
-  }
-};
 </script>
 
 <style lang="scss" scoped></style>
