@@ -1,25 +1,18 @@
 <script>
 import HeaderComponent from '@/components/layout/HeaderComponent.vue';
-import LoginComponent from '@/components/auth/LoginComponent.vue'
+import ResetPasswordComponent from '@/components/auth/ResetPasswordComponent.vue'
 import FooterComponent from '@/components/layout/FooterComponent.vue';
 export default {
     components: {
         HeaderComponent,
-        LoginComponent,
+        ResetPasswordComponent,
         FooterComponent
     }
     // other options
 };
 </script>
-
 <template>
-<HeaderComponent/>
-<LoginForm/>
-<FooterComponent/>
+    <HeaderComponent></HeaderComponent>
+    <ResetPasswordComponent></ResetPasswordComponent>
+    <FooterComponent></FooterComponent>
 </template>
-  
-
-<style>
-/* Styles specific to the login view */
-</style>
-  

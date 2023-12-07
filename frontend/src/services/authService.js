@@ -73,6 +73,6 @@ class AuthService {
             return { success: false, message };
         }
     }
-
-
 }
+
+export default AuthService;
