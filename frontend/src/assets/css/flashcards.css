@@ -1,0 +1,30 @@
+.gold .front,
+.gold .back {
+  background-color: #ffd700;
+}
+/* Add more color variations here */
+
+.btn-large {
+  border: none;
+  background-color: transparent;
+  color: white;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.btn-large:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.flashcard.flipped .flashcard-content {
+  transform: rotateY(180deg);
+}
+
+.flashcard h3 {
+  text-align: center;
+  padding: 0 1rem;
+}
