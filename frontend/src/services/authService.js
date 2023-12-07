@@ -1,6 +1,9 @@
 import axios from 'axios';
 /* eslint-disable */
-const API_URL = 'http://127.0.0.1:5001/api/users/';
+const apiUrl = process.env.VUE_APP_API_URL;
+const apiPort = process.env.VUE_APP_API_PORT;
+const apiUsers = process.env.VUE_APP_API_USERS_ROUTE;
+const API_URL = apiUrl.concat(apiPort).concat(apiUsers);
 
 class AuthService {
     async register(user) {
@@ -31,12 +34,20 @@ class AuthService {
         }
     }
 
-    async login(user) {
+    async login(user, rememberMe) {
         try {
             const response = await axios.post(API_URL + 'login', {
                 email: user.email,
                 password: user.password
             });
+            if (rememberMe) {
+                const oneYearFromNow = new Date();
+                oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+                document.cookie = `token=${response.data.token}; expires=${oneYearFromNow.toUTCString()}; path=/; Secure; HttpOnly`;
+            } else {
+                document.cookie = `token=${response.data.token}; path=/; Secure; HttpOnly`;
+            }
+
             return { success: true, token: response.data.token };
         } catch (error) {
             let message = 'Login failed';
