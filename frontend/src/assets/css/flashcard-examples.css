@@ -1,20 +1,21 @@
-.flashcard-container {
+.flashcard-example-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.flashcard {
+.flashcard-example {
   width: 300px;
   height: 400px;
   margin: 3rem;
   perspective: 1000px;
   border-radius: 5px;
   cursor: pointer;
+  margin-left: 3rem;
   resize: auto;
 }
 
-.flashcard-content {
+.flashcard-example-content {
   width: 100%;
   height: 100%;
   position: relative;
@@ -22,8 +23,7 @@
   transform-style: preserve-3d;
 }
 
-.front,
-.back {
+.flashcard-example-front, .flashcard-example-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -35,67 +35,38 @@
   border-radius: 5px;
 }
 
-/* Generalized colors */
-.red .front,
-.red .back {
+/* Front side colors */
+
+.red .flashcard-example-front {
   background-color: #db4d52;
 }
 
-.yellow .front,
-.yellow .back {
+.yellow .flashcard-example-front {
   background-color: #f9cf3b;
 }
 
-.blue .front,
-.blue .back {
+.blue .flashcard-example-front {
   background-color: #49b0e4;
 }
 
-.green .front,
-.green .back {
-  background-color: #4CAF50;
+/* Back side colors */
+
+.red .flashcard-example-back, .yellow .flashcard-example-back, .blue .flashcard-example-back {
+  color: white;
+  transform: rotateY(180deg);
 }
 
-.purple .front,
-.purple .back {
-  background-color: #8E44AD;
+.red .flashcard-example-back {
+  background-color: #db4d52;
 }
 
-.pink .front,
-.pink .back {
-  background-color: #FFC0CB;
+.yellow .flashcard-example-back {
+  background-color: #f9cf3b;
 }
 
-.orange .front,
-.orange .back {
-  background-color: #FFA500;
+.blue .flashcard-example-back {
+  background-color: #49b0e4;
 }
-
-.brown .front,
-.brown .back {
-  background-color: #A52A2A;
-}
-
-.gray .front,
-.gray .back {
-  background-color: #808080;
-}
-
-.turquoise .front,
-.turquoise .back {
-  background-color: #40E0D0;
-}
-
-.indigo .front,
-.indigo .back {
-  background-color: #4B0082;
-}
-
-.gold .front,
-.gold .back {
-  background-color: #FFD700;
-}
-/* Add more color variations here */
 
 .btn-large {
   border: none;
@@ -113,11 +84,12 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.flashcard.flipped .flashcard-content {
+.flashcard-example.flipped .flashcard-example-content {
   transform: rotateY(180deg);
 }
 
-.flashcard h3 {
+.flashcard-example h3 {
   text-align: center;
   padding: 0 1rem;
 }
+
