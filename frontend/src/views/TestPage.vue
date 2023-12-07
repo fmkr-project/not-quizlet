@@ -1,6 +1,12 @@
+<template>
+  
+</template>
 <script>
-import "@/assets/js/flashcard-example.js";
+import "@/assets/js/flashcards.js";
 export default {
-  name: 'HomeComponent',
+  name: 'TestComponent',
 };
 </script>
+<style scoped>
+@import "@/assets/css/flashcards.css";
+</style>
