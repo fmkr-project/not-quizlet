@@ -1,17 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '@/views/HomePage.vue';
+
+const HomePageRoutes = (prefix) => [
+  {
+    path: '',
+    name: prefix + '.home',
+    meta: {auth: true, name: 'Home'},
+    component: () => import('@/views/HomePage.vue')
+  }
+]
 
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
-    component: HomePage
+    children: HomePageRoutes('default')
   },
   // ... other routes ...
 ];
 
 const router = createRouter({
+  linkActiveClass: 'active',
+  linkExactActiveClass: 'exact-active',
   history: createWebHistory(process.env.BASE_URL),
+  base: process.env.BASE_URL,
   routes
 });
 
