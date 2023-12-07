@@ -14,7 +14,7 @@ export default {
 
 <template>
 <HeaderComponent/>
-<LoginForm/>
+<LoginComponent/>
 <FooterComponent/>
 </template>
   

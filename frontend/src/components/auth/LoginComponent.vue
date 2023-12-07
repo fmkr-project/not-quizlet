@@ -1,5 +1,5 @@
 <script>
-import AuthService from '@/services/authService';
+import AuthService from '@/services/authService'; // Ensure correct path
 
 export default {
   data() {
@@ -20,19 +20,20 @@ export default {
         }, this.rememberMe);
 
         if (response.success) {
-          this.$router.push('/home'); // Redirect to dashboard
+          this.$router.push('/home'); // Adjust this if needed
         } else {
           this.hasError = true;
-          this.errorMessage = response.message;
+          this.errorMessage = response.message; // Use message from AuthService
         }
       } catch (error) {
         this.hasError = true;
-        this.errorMessage = 'An error occurred during login.';
+        this.errorMessage = error.message || 'An error occurred during login.';
       }
     },
   },
 };
 </script>
+
 <template>
   <section class="login-content">
     <b-row class="m-0 align-items-center bg-white h-100">
