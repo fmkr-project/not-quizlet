@@ -209,6 +209,7 @@ class Database:
         return True
 
 
+
     def get_decks_user(self, user_id):
         query = "SELECT deck_id FROM users_links WHERE user_id = :user_id"
         params = {'user_id': user_id}
@@ -239,7 +240,6 @@ class Database:
         query = 'INSERT INTO users(username, email, password_hash, salt) VALUES(:username, :email, :server_hash, :salt)'
         params = {'username': username, 'email': email, 'server_hash': server_hash, 'salt': salt}
         self.execute_query(query, params)
-
     def login_user(self, email, client_hashed_password):
         user_id = self.get_user_id_from_identifier(email, search_by_email=True)
         user = self.get_user_details(user_id, False)
@@ -247,6 +247,12 @@ class Database:
             return True
         else:
             return False
+        
+    def update_password(self, user_id, password_hash, salt):
+        query = 'UPDATE users SET password_hash = :password_hash, salt = :salt WHERE id = :id;'
+        params = {'id': user_id, 'password_hash': password_hash, 'salt': salt}
+        self.execute_query(query, params)
+
     def get_user_id_from_identifier(self, identifier, search_by_email=True):
         """Returns the user_id (None if not found) from an identifier that is either the email (by default) or the username"""
         field = 'email' if search_by_email else 'username'

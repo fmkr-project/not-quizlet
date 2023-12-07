@@ -3,8 +3,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from os import urandom
 from .auth import login_required, logout_required, get_user_id_from_token
 from db import my_db
-from .mail import send_verification_email
+from .mail import send_verification_email, send_reset_password_email
 import jwt
+import json
 from datetime import datetime, timedelta
 from dateutil import parser
 from os import getenv
@@ -117,3 +118,19 @@ def get_user_details(user_id, privacy):
         else:
             return jsonify({'error': 'User not found'}), 404
 
+@user_blueprint.route('/reset_password', methods=['POST'])
+@logout_required
+def reset_password():
+    data = request.json
+    email = data.get('email')
+    user_id = my_db.get_user_id_from_identifier(email)
+    token = jwt.encode({
+            'user_id': user_id,
+            'new_password': data.get('new_password'),
+            'exp': datetime.utcnow() + timedelta(days=365)
+        }, JWT_SECRET_KEY, algorithm='HS256')
+    if user_id:
+        send_reset_password_email(email, token)
+        return jsonify({'message': 'Successful'}), 201
+    else:
+        return jsonify({'error': 'User not found'}), 404

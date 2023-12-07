@@ -1,6 +1,6 @@
 # Project P.I.M.A
 
-## The Polyglot Interactive Mastery App
+## The Polyvalent Interactive Mastery App
 
 **Version**: 1.0 (TBD: )
 
@@ -38,7 +38,7 @@ Welcome to the repository of the Polyglot Interactive Mastery App (AKA: P.I.M.Að
 
 - **Backend**: Python (Flask)
 - **Frontend**: JavaScript (Vue.js 3)
-- **Database**: SQL (PostgreSQL)
+- **Database**: SQL (MySQL)
 
 ### Getting Started
 
