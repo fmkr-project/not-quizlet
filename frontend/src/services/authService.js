@@ -1,8 +1,8 @@
 import axios from 'axios';
 /* eslint-disable */
-const apiUrl = process.env.VUE_APP_API_URL;
-const apiPort = process.env.VUE_APP_API_PORT;
-const apiUsers = process.env.VUE_APP_API_USERS_ROUTE;
+const apiUrl = "127.0.0.1:";
+const apiPort = "5010";
+const apiUsers = "/api/users/";
 const API_URL = apiUrl.concat(apiPort).concat(apiUsers);
 
 class AuthService {
