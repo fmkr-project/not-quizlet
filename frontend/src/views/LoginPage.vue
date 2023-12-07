@@ -13,9 +13,11 @@ export default {
 </script>
 
 <template>
-<HeaderComponent/>
-<LoginComponent/>
-<FooterComponent/>
+    <body>
+        <HeaderComponent/>
+        <LoginComponent/>
+        <FooterComponent/>
+    </body>
 </template>
   
 

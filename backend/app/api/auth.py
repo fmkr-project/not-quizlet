@@ -3,9 +3,13 @@ import jwt
 from functools import wraps
 from os import getenv
 secret_key = getenv("JWT_SECRET_KEY")
+USE_HTTP_COOKIES = getenv("USE_HTTP_COOKIES").lower() == "true"
 
 def get_user_id_from_token():
-    token = request.headers.get('Authorization').split(" ")[1]
+    if USE_HTTP_COOKIES:
+        token = request.cookies.get('token')
+    else:
+        token = request.headers.get('Authorization').split(" ")[1]
     try:
         decoded = jwt.decode(token, secret_key, algorithms=['HS256'])
         return decoded.get('user_id')
@@ -16,11 +20,16 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # Extract token from the Authorization header
-        auth_header = request.headers.get('Authorization')
-        if auth_header and auth_header.startswith('Bearer '):
-            token = auth_header.split(" ")[1]
+        if USE_HTTP_COOKIES:
+            token = request.cookies.get('token')
+            if not token:
+                return jsonify({'message': 'Token not provided or malformed'}), 403
         else:
-            return jsonify({'message': 'Bearer token not provided or malformed'}), 403
+            auth_header = request.headers.get('Authorization')
+            if auth_header and auth_header.startswith('Bearer '):
+                token = auth_header.split(" ")[1]
+            else:
+                return jsonify({'message': 'Bearer token not provided or malformed'}), 403
 
         try:
             # Decode the token using the secret key
@@ -38,7 +47,10 @@ def login_required(f):
 def logout_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        token = request.headers.get('Authorization')
+        if USE_HTTP_COOKIES:
+            token = request.cookies.get('token')
+        else:
+            token = request.headers.get('Authorization')
         if token:
             try:
                 jwt.decode(token, secret_key, algorithms=['HS256'])

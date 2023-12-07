@@ -26,4 +26,4 @@ public_api_blueprint.register_blueprint(public_blueprint)
 api_blueprint.register_blueprint(public_api_blueprint)
 api_blueprint.register_blueprint(private_api_blueprint)
 
-CORS(api_blueprint)
+CORS(api_blueprint, supports_credentials=True, origins="http://localhost:8080")

@@ -1,7 +1,7 @@
 import axios from 'axios';
 /* eslint-disable */
 
-const API_URL = "http://127.0.0.1:5001/api/users/"
+const API_URL = "http://127.0.0.1:5010/api/users/"
 
 class AuthService {
     async register(user) {
@@ -10,7 +10,7 @@ class AuthService {
                 username: user.username,
                 email: user.email,
                 password: user.password
-            });
+            }, {withCredentials: true} );
             return { success: true, message: response.data.message };
         } catch (error) {
             let message = 'Registration failed';
@@ -37,13 +37,13 @@ class AuthService {
             const response = await axios.post(API_URL + 'login', {
                 email: user.email,
                 password: user.password
-            });
+            }, {withCredentials: true});
             if (rememberMe) {
                 const oneYearFromNow = new Date();
                 oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
-                document.cookie = `token=${response.data.token}; expires=${oneYearFromNow.toUTCString()}; path=/; Secure; HttpOnly`;
+                document.cookie = `token=${response.data.token}; expires=${oneYearFromNow.toUTCString()}; path=/; HttpOnly`;
             } else {
-                document.cookie = `token=${response.data.token}; path=/; Secure; HttpOnly`;
+                document.cookie = `token=${response.data.token}; path=/; HttpOnly`;
             }
 
             return { success: true, token: response.data.token };

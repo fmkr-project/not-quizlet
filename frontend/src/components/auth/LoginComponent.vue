@@ -1,6 +1,35 @@
+<template>
+    <div class="container">
+        <section class="login-content" style="margin-top: 67px;">
+            <h2 class="text-center mb-2">Sign In</h2>
+            <div class="row">
+                <div class="col" style="text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-fill text-primary" style="text-align: center;width: 70px;height: 70px;">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
+                    </svg></div>
+            </div>
+            <p class="text-center mb-4">Login to stay connected.</p>
+            <form @submit.prevent="submitLogin">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3"><label class="form-label form-label" for="email">Email</label><input type="email" class="form-control" id="email" v-model="email" aria-describedby="email" placeholder=" "></div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-4"><label class="form-label form-label" for="password">Password</label><input type="password" class="form-control" id="password" v-model="password" aria-describedby="password" placeholder=""></div>
+                    </div>
+                    <div class="col-lg-12 d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check"><input type="checkbox" class="form-check-input" id="customCheck1" v-model="rememberMe"><label class="form-label form-check-label" for="customCheck1">Remember Me</label></div><a href="/auth/reset-password">Forgot Password?</a>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center"><button class="btn btn-primary" type="submit">Sign In</button></div>
+                <p class="text-center text-danger mt-3">{{ errorMessage }}</p>
+                <p class="text-center mt-3">Don’t have an account? <a href="/auth/register" class="text-underline">Click here to sign up.</a></p>
+            </form>
+        </section>
+    </div>
+</template>
 <script>
 import AuthService from '@/services/authService'; // Ensure correct path
-
+const authservice = new AuthService()
 export default {
   data() {
     return {
@@ -14,7 +43,7 @@ export default {
   methods: {
     async submitLogin() {
       try {
-        const response = await AuthService.login({
+        const response = await authservice.login({
           email: this.email,
           password: this.password,
         }, this.rememberMe);
@@ -34,48 +63,5 @@ export default {
 };
 </script>
 
-<template>
-  <section class="login-content">
-    <b-row class="m-0 align-items-center bg-white h-100">
-      <b-col md="6">
-        <b-row class="justify-content-center">
-          <b-col md="10">
-            <b-card class="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card iq-auth-form">
-              <h2 class="mb-2 text-center">Sign In</h2>
-              <p class="text-center">Login to stay connected.</p>
-              <form @submit.prevent="toHomeDashboard">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <label for="email" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="email" v-model="email" aria-describedby="email" placeholder=" " />
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="password" v-model="password" aria-describedby="password" placeholder=" " />
-                    </div>
-                  </div>
-                  <div class="col-lg-12 d-flex justify-content-between">
-                    <div class="form-check mb-3">
-                      <input type="checkbox" class="form-check-input" id="customCheck1" v-model="rememberMe" />
-                      <label class="form-check-label" for="customCheck1">Remember Me</label>
-                    </div>
-                    <a href="/auth/reset-password">Forgot Password?</a>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn btn-primary">Sign In</button>
-                </div>
-                <p v-if="hasError" class="text-danger text-center">Invalid credentials. Please try again.</p>
-                <p class="mt-3 text-center">Don’t have an account? <a href="/auth/register" class="text-underline">Click here to sign up.</a></p>
-              </form>
-            </b-card>
-          </b-col>
-        </b-row>
-      </b-col>
-    </b-row>
-  </section>
-</template>
+
   

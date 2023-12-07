@@ -317,6 +317,6 @@ class Database:
         params = {'user_id': user_id}
         self.execute_query(query, params)
     def is_user_verified(self, user_id):
-        query = "SELECT is_verified FROM users WHERE id = :user_id"
+        query = "SELECT is_email_verified FROM users WHERE id = :user_id"
         params = {'user_id': user_id}
-        return self.execute_query(query, params)[0]['is_verified']
+        return self.execute_query(query, params, False)[0]['is_email_verified']
