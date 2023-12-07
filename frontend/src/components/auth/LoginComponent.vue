@@ -41,10 +41,6 @@ export default {
         <b-row class="justify-content-center">
           <b-col md="10">
             <b-card class="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card iq-auth-form">
-              <router-link :to="{ name: 'default.dashboard' }" class="navbar-brand d-flex align-items-center mb-3 text-primary">
-                <brand-logo></brand-logo>
-                <h4 class="logo-title ms-3 mb-0" data-setting="app_name"><brand-name></brand-name></h4>
-              </router-link>
               <h2 class="mb-2 text-center">Sign In</h2>
               <p class="text-center">Login to stay connected.</p>
               <form @submit.prevent="toHomeDashboard">
