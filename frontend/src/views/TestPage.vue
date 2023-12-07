@@ -1,8 +1,11 @@
+
 <template>
-  
+<body></body>
 </template>
 <script>
-import "@/assets/js/flashcards.js";
+import Flashcard from "@/assets/js/flashcards.js";
+/* eslint-disable */
+var fc = Flashcard();
 export default {
   name: 'TestComponent',
 };
