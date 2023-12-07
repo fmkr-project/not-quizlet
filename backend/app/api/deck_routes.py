@@ -11,7 +11,7 @@ def create_deck():
     data = request.json
     name = data.get('name')
     description = data.get('description')
-    if not name or not description or not user_id_from_token:
+    if not name or not description or user_id_from_token is None:
         return jsonify({'error': 'Missing fields'}), 400
     if my_db.create_deck(name, description, user_id_from_token):
         return jsonify({'message': 'Deck created successfully'}), 201
