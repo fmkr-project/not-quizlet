@@ -6,7 +6,7 @@ if __name__ == '__main__' :
     #my_db.reset()
     #run_tests()
     #send_verification_email('skoukou007@gmail.com', "test")
-    my_app.run(port=5001)
+    my_app.run(port=5010)
     #print_routes(my_app)
     #result = my_db.execute_query("SELECT id, username FROM users", data_manip=False)
     #print(result)
