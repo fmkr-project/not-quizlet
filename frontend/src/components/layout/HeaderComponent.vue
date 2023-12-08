@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3 navbar-light" data-aos="fade-down" id="mainNav">
+    <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3 navbar-light" data-aos="fade-down" id="mainNav" style="background-color: #FCF7FD">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="/">
           <span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon" style="width: 100px;height: 100px;">
@@ -16,7 +16,7 @@
           </div>
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="/home">Home</a>
+              <router-link to="/home" class="nav-link active">Home</router-link>
             </li>
             <li class="nav-item"></li>
             <li class="nav-item">
@@ -29,16 +29,14 @@
             <a href="#"></a>
           </p>
           <a href="#" style="padding: 0px;margin: 10px;text-decoration: underline;margin-right: 16px;">Register</a>
-          <a class="btn btn-primary shadow" role="button" href="/login">Sign in</a>
+          <router-link to="/login" class="btn btn-primary shadow" role="button">Sign in</router-link>
         </div>
       </div>
     </nav>
-  </template>
-  <script>
-    export default {
-      name: 'HeaderComponent'
-    };
-  </script>
-  <style scoped>
-    /* You can add scoped CSS styles here, specific to this component */
-  </style>
+</template>
+<script>
+  export default {
+    name: 'HeaderComponent'
+  };
+</script>
+<style></style>

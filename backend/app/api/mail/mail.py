@@ -3,7 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from flask import render_template, current_app
 from os import getenv
-
+FLASK_URI = getenv("FLASK_HOST")+getenv("FLASK_PORT")
 def load_mail_config():
     mail_config = {
         'MAIL_SERVER': getenv('MAIL_SERVER'),
@@ -36,9 +36,9 @@ def send_mail(to_email, subject, template, **kwargs):
         server.quit()
 
 def send_verification_email(to_email, token):
-    verification_link = f"https://127.0.0.1:5001/verify?token={token}"
+    verification_link = f"{FLASK_URI}/verify?token={token}"
     send_mail(to_email, "Email Verification", 'mail_verification.html', verification_link=verification_link)
 
 def send_reset_password_email(to_email, token):
-    verification_link = f"https://127.0.0.1:5001/reset_password?token={token}"
+    verification_link = f"{FLASK_URI}/reset_password?token={token}"
     send_mail(to_email, "Email Verification", 'mail_verification.html', verification_link=verification_link)

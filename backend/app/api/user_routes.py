@@ -88,7 +88,7 @@ def login_user():
 
     user = my_db.login_user(email, client_hashed_password)
     if USE_MAIL_VERIFICATION and user and not my_db.is_user_verified(user_id):
-        return jsonify({'error': 'Email not verified.'}), 401
+        return jsonify({'error': 'Please check your email and verify your account using the verification link.'}), 401
     if user:
         my_db.reset_failed_attempts(user_id, client_ip)  # Reset on successful login
         token = jwt.encode({

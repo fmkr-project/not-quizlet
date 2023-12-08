@@ -19,3 +19,5 @@ export default {
   </body>
   <!-- Rest of your homepage content -->
 </template>
+<style scoped>
+</style>
