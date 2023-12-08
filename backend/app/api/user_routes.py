@@ -117,18 +117,19 @@ def get_user_details(user_id, privacy):
         else:
             return jsonify({'error': 'User not found'}), 404
 
-@user_blueprint.route('/reset_password', methods=['GET'])
+@user_blueprint.route('/reset_password', methods=['POST'])
+@logout_required
 def reset_password():
     data = request.json
     email = data.get('email')
     user_id = my_db.get_user_id_from_identifier(email)
-    if user_id is None:
-        return jsonify({'error': 'This account is not registered.'}), 401
-    else:  
-        # Generate and send verification token
-        exp = datetime.utcnow() + timedelta(hours=24)
-        token = jwt.encode({'user_id': user_id, 'exp': exp},
-                            getenv('JWT_SECRET_KEY'), algorithm='HS256')
+    token = jwt.encode({
+            'user_id': user_id,
+            'new_password': data.get('new_password'),
+            'exp': datetime.utcnow() + timedelta(days=365)
+        }, JWT_SECRET_KEY, algorithm='HS256')
+    if user_id:
         send_reset_password_email(email, token)
-        message = 'We have sent a password reset verification link on your email.'
-        return jsonify({'message': message}), 201
+        return jsonify({'message': 'Successful'}), 201
+    else:
+        return jsonify({'error': 'User not found'}), 404

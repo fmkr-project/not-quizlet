@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app
 from .mail import send_verification_email, send_reset_password_email
 import jwt
-from os import getenv
+from os import getenv, urandom
 from db import my_db
 from datetime import datetime, timedelta
 
@@ -67,14 +67,16 @@ def verify_reset_password():
     if not token:
         return jsonify({'error': 'No token provided'}), 400
     try:
-        # Decode the token
         decoded = jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
         user_id = decoded.get('user_id')
-        # Check expiration internally handled by jwt.decode
 
-        # Set the user as verified
-        my_db.mark_user_as_verified(user_id)
-        return jsonify({'message': 'Your password has been succesfully modified.'}), 200
+        # Get and encrypt the new password
+        raw_new_password = decoded.get('new_password')
+        salt = urandom(16).hex()
+        hashed_password = generate_password_hash(raw_new_password + salt)
+        my_db.update_password(user_id, hashed_password, salt)
+        message = 'Your password has been reset successfully.'
+        return jsonify({'message': message}), 201
 
     except jwt.ExpiredSignatureError:
         return jsonify({'error': 'Token expired'}), 400

@@ -235,6 +235,12 @@ class Database:
                 exists['email'] = len(email_result) > 0
             exists['any'] = exists['username'] or exists['email']
         return exists
+
+    def update_password(self, user_id, password_hash, salt):
+    query = 'UPDATE users SET password_hash = :password_hash, salt = :salt WHERE id = :id;'
+    params = {'id': user_id, 'password_hash': password_hash, 'salt': salt}
+    self.execute_query(query, params)
+
     def register_user(self, username, email, server_hash, salt):
         query = 'INSERT INTO users(username, email, password_hash, salt) VALUES(:username, :email, :server_hash, :salt)'
         params = {'username': username, 'email': email, 'server_hash': server_hash, 'salt': salt}
@@ -247,12 +253,24 @@ class Database:
             return True
         else:
             return False
+
+    def mark_user_as_verified(self, user_id):
+        query = 'UPDATE users SET is_email_verified = 1 WHERE id = :user_id'
+        params = {'user_id': user_id}
+        self.execute_query(query, params)
+        
+    def is_user_verified(self, user_id):
+        query = "SELECT is_email_verified FROM users WHERE id = :user_id"
+        params = {'user_id': user_id}
+        return self.execute_query(query, params, False)[0]['is_email_verified']
+        
     def get_user_id_from_identifier(self, identifier, search_by_email=True):
         """Returns the user_id (None if not found) from an identifier that is either the email (by default) or the username"""
         field = 'email' if search_by_email else 'username'
         query = f"SELECT id FROM users WHERE {field} = :identifier"
         user = self.execute_query(query, {'identifier': identifier}, False)
         return user[0]['id'] if user else None
+
     def get_user_details(self, user_id, privacy = True):
         """Gets the user details considering his user_id"""
         if privacy:
@@ -262,12 +280,16 @@ class Database:
         user_details = self.execute_query(query, {'user_id': user_id}, False)
         return user_details[0] if user_details else None
     
+
+
     def lock_account(self, user_id):
         query = "UPDATE users SET is_locked = 1 WHERE id = :user_id"
         self.execute_query(query, {'user_id': user_id}, True)
+
     def unlock_account(self, user_id):
         query = "UPDATE users SET is_locked = 0 WHERE id = :user_id"
         self.execute_query(query, {'user_id': user_id}, True)
+
     def is_account_locked(self, user_id):
         query = "SELECT is_locked FROM users WHERE id = :user_id"
         result = self.execute_query(query, {'user_id': user_id}, False)
@@ -312,11 +334,3 @@ class Database:
         query = "UPDATE failed_login_attempts SET attempts = 0 WHERE user_id = :user_id AND ip_address = :ip_address"
         self.execute_query(query, {'user_id': user_id, 'ip_address': ip_address}, True)
 
-    def mark_user_as_verified(self, user_id):
-        query = 'UPDATE users SET is_email_verified = 1 WHERE id = :user_id'
-        params = {'user_id': user_id}
-        self.execute_query(query, params)
-    def is_user_verified(self, user_id):
-        query = "SELECT is_email_verified FROM users WHERE id = :user_id"
-        params = {'user_id': user_id}
-        return self.execute_query(query, params, False)[0]['is_email_verified']
