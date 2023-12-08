@@ -34,13 +34,24 @@
                   <input class="form-control" id="verify-password" placeholder="Verify New Password" v-model="resetVerifyPassword" type="password">
                 </div>
               </div>
-              
-              <!-- Modal footer -->
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Send My Password</button>
-                <button type="button" class="btn btn-secondary" @click="showModal = false">Cancel</button>
-                <div v-if="errorPopup" class="alert alert-danger">{{ errorPopup }}</div>
-              </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!-- Grid row for error message -->
+                <div class="row w-100">
+                    <div class="col-12 col-md-8 mx-auto">
+                        <div v-if="errorPopup" class="alert alert-danger text-center">{{ errorPopup }}</div>
+                    </div>
+                </div>
+
+                <!-- Grid row for buttons -->
+                <div class="row w-100">
+                    <div class="col-12 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Send a password reset link.</button>
+                        <button type="button" class="btn btn-secondary" @click="resetErrorPopUp">Cancel</button>
+                    </div>
+                </div>
+            </div>
             </form>
 
             <!-- Error Message -->
@@ -65,6 +76,13 @@ export default {
     };
   },
   methods: {
+    resetErrorPopUp(){
+        this.errorPopup = '';
+        this.showModal = false;
+        this.resetEmail = '';
+        this.resetNewPassword = '';
+        this.resetVerifyPassword = '';
+    },
     submitReset() {
       // Validate the input fields
       if (!this.resetEmail || !this.resetNewPassword || !this.resetVerifyPassword) {

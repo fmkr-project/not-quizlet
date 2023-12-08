@@ -29,7 +29,7 @@
                 <p class="text-center text-danger mt-3">{{ errorMessage }}</p>
                 <p class="text-center mt-3">Don’t have an account? <a href="/auth/register" class="text-underline">Click here to sign up.</a></p>
             </form>
-            <div class="reset-password-link align-items-center mb-4">
+            <div class="reset-password-link d-flex justify-content-center">
               <ResetPasswordComponent/>
             </div>
         </section>

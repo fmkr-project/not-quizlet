@@ -61,6 +61,23 @@ def verify_email():
     except jwt.InvalidTokenError:
         return jsonify({'error': 'Invalid token'}), 400
 
-@public_blueprint.route('/reset_password', methods=['POST'])
-def reset_password():
-    pass
+@public_blueprint.route('/reset_password', methods=['GET'])
+def verify_reset_password():
+    token = request.args.get('token')
+    if not token:
+        return jsonify({'error': 'No token provided'}), 400
+    try:
+        # Decode the token
+        decoded = jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
+        user_id = decoded.get('user_id')
+        # Check expiration internally handled by jwt.decode
+
+        # Set the user as verified
+        my_db.mark_user_as_verified(user_id)
+        return jsonify({'message': 'Your password has been succesfully modified.'}), 200
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({'error': 'Token expired'}), 400
+    except jwt.InvalidTokenError:
+        return jsonify({'error': 'Invalid token'}), 400
+    

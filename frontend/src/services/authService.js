@@ -71,6 +71,13 @@ class AuthService {
             return { success: false, message };
         }
     }
+    async reset_password(user){
+        const response = await axios.post(API_URL + 'reset_password', {
+            email: user.email,
+            password: user.password
+        }, {withCredentials: true});
+
+    }
 }
 
 export default AuthService;
