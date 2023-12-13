@@ -48,7 +48,7 @@ class AuthService {
 
             return { success: true, token: response.data.token };
         } catch (error) {
-            let message = 'Login failed';
+            let message = 'The login has failed, make sure your email is registered.';
             if (error.response) {
                 switch (error.response.status) {
                     case 400:
@@ -71,11 +71,27 @@ class AuthService {
             return { success: false, message };
         }
     }
-    async reset_password(user){
-        const response = await axios.post(API_URL + 'reset_password', {
-            email: user.email,
-            password: user.password
-        }, {withCredentials: true});
+    async send_reset_password(user){
+        try{
+            const response = await axios.post(API_URL + 'send_reset_password', {
+                email: user.email,
+                password: user.password
+            }, {withCredentials: true});
+            return {success: true};
+        }
+        catch (error){
+            let message = 'There was an error resetting your password.';
+            if (error.response) {
+                switch (error.response.status) {
+                    case 404:
+                        message = 'This mail is not registered.';
+                        break;
+                }
+            }
+            return { success: false, message };
+        }
+        
+
 
     }
 }

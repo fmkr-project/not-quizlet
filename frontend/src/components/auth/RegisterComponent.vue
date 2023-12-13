@@ -11,6 +11,7 @@
   import AuthService from '@/services/authService';
   
   export default {
+    name: "RegisterComponent",
     data() {
       return {
         user: {
@@ -29,6 +30,7 @@
           // Handle failure scenario
         }
       }
-    }
+    },
+
   };
   </script>

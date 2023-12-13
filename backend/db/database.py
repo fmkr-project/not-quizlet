@@ -237,9 +237,9 @@ class Database:
         return exists
 
     def update_password(self, user_id, password_hash, salt):
-    query = 'UPDATE users SET password_hash = :password_hash, salt = :salt WHERE id = :id;'
-    params = {'id': user_id, 'password_hash': password_hash, 'salt': salt}
-    self.execute_query(query, params)
+        query = 'UPDATE users SET password_hash = :password_hash, salt = :salt WHERE id = :user_id;'
+        params = {'user_id': user_id, 'password_hash': password_hash, 'salt': salt}
+        self.execute_query(query, params)
 
     def register_user(self, username, email, server_hash, salt):
         query = 'INSERT INTO users(username, email, password_hash, salt) VALUES(:username, :email, :server_hash, :salt)'

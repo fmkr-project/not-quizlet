@@ -12,7 +12,9 @@ export default {
 };
 </script>
 <template>
-    <HeaderComponent></HeaderComponent>
-    <ResetPasswordComponent></ResetPasswordComponent>
-    <FooterComponent></FooterComponent>
+    <body>
+    <HeaderComponent/>
+    <ResetPasswordComponent/>
+    <FooterComponent/>
+    </body>
 </template>

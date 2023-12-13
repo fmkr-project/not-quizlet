@@ -1,14 +1,14 @@
 <template>
-  <div class="wrapper" id="vanta-bg" style="margin-top: 40px; margin-bottom: 40px">
-    <div class="container">
+  <div class="login-container" id="your-element-selector">
+    <div class="login-form" >
         <section class="login-content">
-            <h2 class="text-center mb-2">Sign In</h2>
+
             <div class="row">
                 <div class="col" style="text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-fill text-primary" style="text-align: center;width: 70px;height: 70px;">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
                     </svg></div>
             </div>
-            <p class="text-center mb-4">Login to stay connected.</p>
+            <p class="text-center mb-4">Login to your PIMA account.</p>
             <form @submit.prevent="submitLogin">
                 <div class="row">
                     <div class="col-lg-12">
@@ -37,9 +37,10 @@
   </div>
 </template>
 <script>
+/* global VANTA */
 import ResetPasswordComponent from '@/components/auth/ResetPasswordComponent';
 import AuthService from '@/services/authService'; // Ensure correct path
-const authservice = new AuthService()
+const authservice = new AuthService();
 export default {
   name : 'LoginComponent',
   components : {
@@ -73,6 +74,23 @@ export default {
         this.errorMessage = error.message || 'An error occurred during login.';
       }
     },
+  },
+  mounted() {
+    this.vantaEffect = VANTA.WAVES({
+  el: "#your-element-selector",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  scale: 1.00,
+  scaleMobile: 1.00,
+})
+  },
+  beforeUnmount() { // or beforeDestroy() in Vue 2
+    if (this.vantaEffect) {
+      this.vantaEffect.destroy();
+    }
   }
 };
 </script>
@@ -93,7 +111,24 @@ export default {
   cursor: pointer; /* Change cursor to pointer when hovering over the label */
   margin-bottom: 0; /* Keep the label aligned with the checkbox */
 }
+
+/* The outer container */
+.login-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 70vh; /* Full height of the viewport */
+}
+
+/* The login form */
+.login-form {
+    width: 500px; /* Fixed width */
+    height: 600px; /* Fixed height */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better appearance */
+    border-radius: 10px; /* Optional: rounds the corners */
+    background-color: white; /* Optional: background color */
+    border-radius: 40px;
+}
+
 </style>
-
-
-  

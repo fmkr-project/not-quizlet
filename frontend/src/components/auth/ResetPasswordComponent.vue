@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import AuthService from '@/services/authService';
+const authservice = new AuthService();
 export default {
   data() {
     return {
@@ -83,7 +85,7 @@ export default {
         this.resetNewPassword = '';
         this.resetVerifyPassword = '';
     },
-    submitReset() {
+    async submitReset() {
       // Validate the input fields
       if (!this.resetEmail || !this.resetNewPassword || !this.resetVerifyPassword) {
         this.errorPopup = 'All fields are required.';
@@ -94,12 +96,26 @@ export default {
         return;
       }
       // TODO: Implement the reset password logic
-      this.errorPopup = ''; // Clear error message
-      this.showModal = false; // Close the modal on successful submission
-      // Reset form
-      this.resetEmail = '';
-      this.resetNewPassword = '';
-      this.resetVerifyPassword = '';
+      try {
+        const response = await authservice.send_reset_password({
+          email: this.resetEmail,
+          password: this.resetNewPassword,
+        });
+        if (response.success) {
+            this.showModal = false; // Close the modal on successful submission
+            this.errorPopup = ''; // Clear error message
+            // Reset form
+            this.resetEmail = '';
+            this.resetNewPassword = '';
+            this.resetVerifyPassword = '';
+          } else {
+            this.errorPopup = response.message; // Use message from AuthService
+          }
+      } catch (error) {
+        this.errorPopup = error.message || 'An error occurred during login.';
+      }
+
+
     }
   }
 };

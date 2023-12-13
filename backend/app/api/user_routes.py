@@ -117,9 +117,9 @@ def get_user_details(user_id, privacy):
         else:
             return jsonify({'error': 'User not found'}), 404
 
-@user_blueprint.route('/reset_password', methods=['POST'])
+@user_blueprint.route('/send_reset_password', methods=['POST'])
 @logout_required
-def reset_password():
+def send_reset_password():
     data = request.json
     email = data.get('email')
     user_id = my_db.get_user_id_from_identifier(email)
