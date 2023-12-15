@@ -28,15 +28,33 @@
           <p class="navbar-text p-0 m-0">
             <a href="#"></a>
           </p>
-          <a href="#" style="padding: 0px;margin: 10px;text-decoration: underline;margin-right: 16px;">Register</a>
-          <router-link to="/login" class="btn btn-primary shadow" role="button">Sign in</router-link>
+          <div v-if="isLoggedIn">
+          </div>
+          <div v-else>
+            <a href="#" style="padding: 0px;margin: 10px;text-decoration: underline;margin-right: 16px;">Register</a>
+            <router-link to="/login" class="btn btn-primary shadow" role="button">Sign in</router-link>
+          </div>
         </div>
       </div>
     </nav>
 </template>
 <script>
-  export default {
-    name: 'HeaderComponent'
-  };
+import AuthService from '@/services/authService'; // Import AuthService
+const authservice = new AuthService();
+export default {
+  name: 'HeaderComponent',
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    }
+  },
+  methods: {
+    async logout() {
+      await authservice.logout();
+      // Optionally, redirect to home or login page after logout
+      this.$router.push('/login'); // or another route
+    }
+  }
+};
 </script>
 <style></style>

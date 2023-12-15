@@ -1,15 +1,20 @@
-from flask import request, jsonify, g
+from flask import request, jsonify, g, current_app
 import jwt
 from functools import wraps
 from os import getenv
 secret_key = getenv("JWT_SECRET_KEY")
 USE_HTTP_COOKIES = getenv("USE_HTTP_COOKIES").lower() == "true"
 
-def get_user_id_from_token():
+def get_token():
     if USE_HTTP_COOKIES:
-        token = request.cookies.get('token')
+        return request.cookies.get('token')
     else:
-        token = request.headers.get('Authorization').split(" ")[1]
+        auth_header = request.headers.get('Authorization')
+        return auth_header.split(" ")[1] if auth_header and auth_header.startswith('Bearer ') else None
+
+
+def get_user_id_from_token():
+    token = get_token()
     try:
         decoded = jwt.decode(token, secret_key, algorithms=['HS256'])
         return decoded.get('user_id')
@@ -19,27 +24,25 @@ def get_user_id_from_token():
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        # Extract token from the Authorization header
-        if USE_HTTP_COOKIES:
-            token = request.cookies.get('token')
-            if not token:
-                return jsonify({'message': 'Token not provided or malformed'}), 403
-        else:
-            auth_header = request.headers.get('Authorization')
-            if auth_header and auth_header.startswith('Bearer '):
-                token = auth_header.split(" ")[1]
-            else:
-                return jsonify({'message': 'Bearer token not provided or malformed'}), 403
+        token = get_token()
+        if not token:
+            return jsonify({'message': 'Authentication required'}), 403
 
-        try:
-            # Decode the token using the secret key
-            payload = jwt.decode(token, secret_key, algorithms=['HS256'])
-            g.user_id_from_token = payload['user_id']  # Store in Flask's global context
-        except jwt.ExpiredSignatureError:
-            return jsonify({'message': 'Token has expired!'}), 403
-        except jwt.InvalidTokenError:
-            return jsonify({'message': 'Invalid token!'}), 403
+        # Retrieve the user ID from the cache
+        cache_key = f"token_{token}"
+        user_id_from_token = current_app.cache.get(cache_key)
 
+        if user_id_from_token is None:
+            try:
+                payload = jwt.decode(token, secret_key, algorithms=['HS256'])
+                user_id_from_token = payload['user_id']
+                current_app.cache.set(cache_key, user_id_from_token, timeout=300)  # Cache for 5 minutes
+            except jwt.ExpiredSignatureError:
+                return jsonify({'message': 'Token has expired'}), 403
+            except jwt.InvalidTokenError:
+                return jsonify({'message': 'Invalid token'}), 403
+
+        g.user_id_from_token = user_id_from_token
         return f(*args, **kwargs)
 
     return decorated_function
@@ -47,10 +50,7 @@ def login_required(f):
 def logout_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if USE_HTTP_COOKIES:
-            token = request.cookies.get('token')
-        else:
-            token = request.headers.get('Authorization')
+        token = get_token()
         if token:
             try:
                 jwt.decode(token, secret_key, algorithms=['HS256'])

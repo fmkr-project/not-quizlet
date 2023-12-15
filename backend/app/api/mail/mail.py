@@ -41,4 +41,4 @@ def send_verification_email(to_email, token):
 
 def send_reset_password_email(to_email, token):
     verification_link = f"{FLASK_URI}/reset_password?token={token}"
-    send_mail(to_email, "Password Reset Request", 'password_reset.html', verification_link=verification_link)
+    send_mail(to_email, "Password Reset Request", 'password_reset.html', password_reset_link=verification_link)

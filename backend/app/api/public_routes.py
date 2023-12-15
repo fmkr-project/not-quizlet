@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from .mail import send_verification_email, send_reset_password_email
+from werkzeug.security import generate_password_hash
 import jwt
 from os import getenv, urandom
 from db import my_db

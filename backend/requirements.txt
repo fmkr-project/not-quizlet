@@ -1,5 +1,6 @@
 Flask
 Flask-limiter
+Flask-Caching
 Werkzeug
 python-dotenv
 pyjwt
