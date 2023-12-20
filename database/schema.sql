@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS "decks" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREM
                                     "name" TEXT,
                                     "description" TEXT,
                                     "creator_id" INTEGER DEFAULT 0,
+                                    "is_public" INTEGER DEFAULT 1,
                                     FOREIGN KEY ("creator_id") REFERENCES "users"("id"));
 CREATE INDEX IF NOT EXISTS "idx_decks_creator_id" ON "decks" ("creator_id");
 

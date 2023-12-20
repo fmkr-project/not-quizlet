@@ -226,3 +226,67 @@ def upload_image():
             return jsonify({'error': 'Upload failed'}), 500
     else:
         return jsonify({'error': 'File type not allowed'}), 400
+
+@user_blueprint.route('/modify_profile', methods=['POST'])
+@login_required
+def modify_profile():
+    user_id = getattr(g, 'user_id_from_token', None)
+    data = request.form  # Use form data for text fields
+    new_username = data.get('username')
+    new_password = data.get('password')
+    file = request.files.get('file')  # File upload
+
+    if user_id is None:
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    # Check and update username
+    if new_username and my_db.username_exists(new_username, user_id):
+        return jsonify({'error': 'Username already taken'}), 409
+    elif new_username:
+        my_db.update_username(user_id, new_username)
+
+    # Update password if provided
+    if new_password:
+        salt = urandom(16).hex()
+        password_hash = generate_password_hash(new_password + salt)
+        my_db.update_password(user_id, password_hash, salt)
+
+    # Handle file upload for profile picture
+    if file and file.filename:
+        ALLOWED_MIME_TYPES = {'image/jpeg', 'image/png', 'image/gif', 'image/webp'}
+        BUCKET_NAME = 'image-bucket-pfps'
+        content_type = file.content_type
+
+        if content_type in ALLOWED_MIME_TYPES:
+            filename = secure_filename(file.filename)
+            s3_client = boto3.client('s3')
+            object_prefix = f"user-profiles/{user_id}/"
+            # List and delete existing files
+            try:
+                response = s3_client.list_objects_v2(Bucket=BUCKET_NAME, Prefix=object_prefix)
+                for obj in response.get('Contents', []):
+                    s3_client.delete_object(Bucket=BUCKET_NAME, Key=obj['Key'])
+            except ClientError as e:
+                print(e)
+                return jsonify({'error': 'Error in deleting existing files'}), 500
+
+            # Upload new file
+            object_name = f"{object_prefix}{filename}"
+            try:
+                s3_client.upload_fileobj(
+                    file,
+                    BUCKET_NAME,
+                    object_name,
+                    ExtraArgs={
+                        'ContentType': content_type
+                    }
+                )
+                new_pfp_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{object_name}'
+                my_db.update_user_pfp(user_id, new_pfp_url)  # Update profile picture URL in the database
+            except Exception as e:
+                print(e)
+                return jsonify({'error': 'Error updating profile picture'}), 500
+        else:
+            return jsonify({'error': 'File type not allowed'}), 400
+
+    return jsonify({'message': 'Profile updated successfully'}), 200
