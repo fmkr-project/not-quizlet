@@ -15,13 +15,24 @@
             <h1 class="fw-bold" style="font-size: 31px;">Polyvalent Interactive <br>Mastery App </h1>
           </div>
           <ul class="navbar-nav mx-auto">
-            <li class="nav-item">
-              <router-link to="/home" class="nav-link active">Home</router-link>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="register.html">Projects</a>
-            </li>
-          </ul>
+      <li class="nav-item">
+        <router-link to="/home" class="nav-link active">Home</router-link>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="register.html">Deck Hub</a>
+      </li>
+
+      <!-- Conditional links that appear only when the user is logged in -->
+      <li class="nav-item" v-if="isLoggedIn">
+        <router-link to="/my-decks" class="nav-link">My Decks</router-link>
+      </li>
+      <li class="nav-item" v-if="isLoggedIn">
+        <router-link to="/my-cards" class="nav-link">My Cards</router-link>
+      </li>
+      <li class="nav-item" v-if="isLoggedIn">
+        <router-link to="/my-profile" class="nav-link">My Profile</router-link>
+      </li>
+    </ul>
           <div v-if="isLoggedIn">
             <ul class="navbar-nav">
     <li class="nav-item">
