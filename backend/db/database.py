@@ -274,7 +274,7 @@ class Database:
     def get_user_details(self, user_id, privacy = True):
         """Gets the user details considering his user_id"""
         if privacy:
-            query = "SELECT id, username, email, created_at FROM users WHERE id = :user_id"
+            query = "SELECT id, username, email, created_at, pfp_image_location FROM users WHERE id = :user_id"
         else:
             query = "SELECT * FROM users WHERE id = :user_id"
         user_details = self.execute_query(query, {'user_id': user_id}, False)
@@ -334,3 +334,7 @@ class Database:
         query = "UPDATE failed_login_attempts SET attempts = 0 WHERE user_id = :user_id AND ip_address = :ip_address"
         self.execute_query(query, {'user_id': user_id, 'ip_address': ip_address}, True)
 
+    def update_user_pfp(self, user_id, new_pfp_url):
+        query = "UPDATE users SET pfp_image_location = :pfp_image_location WHERE id = :user_id"
+        params = {"pfp_image_location": new_pfp_url, "user_id": user_id}
+        self.execute_query(query, params)

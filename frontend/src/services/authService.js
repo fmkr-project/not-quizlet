@@ -2,7 +2,7 @@
 import axios from 'axios';
 import store from '@/store/store'; // Import Vuex store
 
-const API_URL = "http://127.0.0.1:5010/api/users/";
+const API_URL = process.env.VUE_APP_API_URL+"users/";
 
 class AuthService {
   constructor() {
@@ -45,14 +45,17 @@ class AuthService {
         password: user.password,
         rememberMe: rememberMe
       }, { withCredentials: true });
-
-      // Check if the backend response indicates a successful login
+  
       if (response.data.success) {
-        await store.dispatch('checkLoginStatus'); // This call will update the Vuex state
-        return { success: true, message: response.data.message };
-        console.log(response)
+        const userDetailsResponse = await this.getUserDetails(); // Use await here
+        if (userDetailsResponse.success) {
+          store.commit('SET_LOGGED_IN', true);
+          store.commit('SET_USER_DETAILS', userDetailsResponse.userDetails);
+          return { success: true, message: response.data.message };
+        } else {
+          return { success: false, message: userDetailsResponse.message };
+        }
       } else {
-        // If the backend response indicates failure (e.g., wrong credentials)
         return { success: false, message: response.data.error || 'Login failed' };
       }
     } catch (error) {
@@ -106,7 +109,7 @@ class AuthService {
   async logout() {
     try {
       await axios.post(API_URL + 'logout', {}, { withCredentials: true });
-      store.dispatch('checkLoginStatus'); // Update Vuex state
+      store.commit('LOGOUT');
       return { success: true };
     } catch (error) {
       return { success: false, message: 'Logout failed' };
@@ -123,7 +126,15 @@ class AuthService {
         store.commit('SET_LOGGED_IN', false);
         return { success: false, message: 'Failed to check authentication' };
     }
-}
+  }
+  async getUserDetails() {
+    try {
+        const response = await axios.get(API_URL + 'get_user_details', { withCredentials: true });
+        return { success: true, userDetails: response.data.user };
+    } catch (error) {
+        return { success: false, message: error.response?.data?.error || 'Failed to fetch user details' };
+    }
+  }
 }
 
 export default AuthService;

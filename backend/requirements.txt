@@ -9,3 +9,4 @@ pytest
 datetime
 python-dateutil
 Flask-CORS
+boto3

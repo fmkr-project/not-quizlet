@@ -55,7 +55,7 @@ def logout_required(f):
             try:
                 jwt.decode(token, secret_key, algorithms=['HS256'])
                 # If this point is reached, the user is authenticated
-                return jsonify({'message': 'You are already logged in'}), 403
+                return jsonify({'is_connected': True, 'message': 'You are already logged in'}), 403
             except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
                 # Token is invalid or expired, allow the request
                 pass

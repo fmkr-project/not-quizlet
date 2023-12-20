@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, g, current_app, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from os import urandom
 from .auth import login_required, logout_required, get_user_id_from_token, get_token
 from db import my_db
@@ -8,11 +9,18 @@ import jwt
 from datetime import datetime, timedelta
 from dateutil import parser
 from os import getenv
+import boto3
+from botocore.exceptions import ClientError
+import mimetypes
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
 USE_MAIL_VERIFICATION = getenv('USE_MAIL_VERIFICATION').lower() == 'true'
 JWT_SECRET_KEY = getenv("JWT_SECRET_KEY")
+
+AWS_ACCESS_KEY_ID = getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = getenv("AWS_SECRET_ACCESS_KEY")
+AWS_DEFAULT_REGION = getenv("AWS_DEFAULT_REGION")
 
 user_blueprint = Blueprint('users', __name__)
 
@@ -113,21 +121,18 @@ def login_user():
         return jsonify({'error': 'Invalid credentials'}), 401
 
 
-@user_blueprint.route('/get_details/<int:user_id>/<int:privacy>', methods=['GET'])
+@user_blueprint.route('/get_user_details', methods=['GET'])
 @login_required
-def get_user_details(user_id, privacy):
+def get_user_details():
     user_id_from_token = getattr(g, 'user_id_from_token', None)
     if user_id_from_token is None:
         return jsonify({'error': 'Unauthorized'}), 403
-
-    if user_id != user_id_from_token:
-        return jsonify({'message': 'Unauthorized'}), 403
     else:
-        cache_key = f"user_details_{user_id}_{privacy}"
+        cache_key = f"user_details_{user_id_from_token}"
         user_details = current_app.cache.get(cache_key)
 
         if user_details is None:
-            user_details = my_db.get_user_details(user_id, privacy)
+            user_details = my_db.get_user_details(user_id_from_token)
             if user_details:
                 current_app.cache.set(cache_key, user_details, timeout=300)  # Cache for 5 minutes
             else:
@@ -172,4 +177,52 @@ def logout_user():
 @user_blueprint.route('/check_auth', methods=['GET'])
 @login_required
 def check_auth():
-    return jsonify({'message': 'User is authenticated'}), 200
+    return jsonify({'success': True, 'message': 'User is authenticated'}), 200
+
+@user_blueprint.route('/upload_image', methods=['POST'])
+@login_required
+def upload_image():
+    ALLOWED_MIME_TYPES = {'image/jpeg', 'image/png', 'image/gif', 'image/webp'}
+    BUCKET_NAME = 'image-bucket-pfps'
+    user_id = getattr(g, 'user_id_from_token', None)
+
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    content_type = file.content_type    
+    if content_type in ALLOWED_MIME_TYPES:
+        filename = secure_filename(file.filename)
+        s3_client = boto3.client('s3')
+        object_prefix = f"user-profiles/{user_id}/"
+
+        # List and delete existing files
+        try:
+            response = s3_client.list_objects_v2(Bucket=BUCKET_NAME, Prefix=object_prefix)
+            for obj in response.get('Contents', []):
+                s3_client.delete_object(Bucket=BUCKET_NAME, Key=obj['Key'])
+        except ClientError as e:
+            print(e)
+            return jsonify({'error': 'Error in deleting existing files'}), 500
+
+        # Upload new file
+        object_name = f"{object_prefix}{filename}"
+        try:
+            s3_client.upload_fileobj(
+                file,
+                BUCKET_NAME,
+                object_name,
+                ExtraArgs={
+                    'ContentType': content_type
+                }
+            )
+            new_pfp_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{object_name}'
+            my_db.update_user_pfp(user_id, new_pfp_url)  # Update profile picture URL in database
+            return jsonify({'message': 'File uploaded successfully'}), 201
+        except Exception as e:
+            print(e)
+            return jsonify({'error': 'Upload failed'}), 500
+    else:
+        return jsonify({'error': 'File type not allowed'}), 400

@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT,
                                     "salt" TEXT NOT NULL,
                                     "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                     "is_locked" INTEGER DEFAULT 0,
-                                    "is_email_verified" INTEGER DEFAULT 0);
+                                    "is_email_verified" INTEGER DEFAULT 0,
+                                    "pfp_image_location" TEXT DEFAULT "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png");
 CREATE INDEX IF NOT EXISTS "idx_users_email" ON "users" ("email");
 CREATE INDEX IF NOT EXISTS "idx_users_username" ON "users" ("username");
 

@@ -6,7 +6,7 @@ import 'aos/dist/aos.css';
 import store from './store/store'; // Import the store
 
 const app = createApp(App);
-
+store.commit('INITIALIZE_STORE');
 app.use(router);  // Add this line to use the router
 app.use(store)
 app.config.globalProperties.$AOS = AOS.init();

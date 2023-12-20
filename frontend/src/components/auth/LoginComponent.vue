@@ -40,7 +40,6 @@
 /* global VANTA */
 import ResetPasswordComponent from '@/components/auth/ResetPasswordComponent';
 import AuthService from '@/services/authService'; // Ensure correct path
-const authservice = new AuthService();
 export default {
   name : 'LoginComponent',
   components : {
@@ -58,12 +57,15 @@ export default {
   methods: {
     async submitLogin() {
       try {
+        const authservice = new AuthService();
         const response = await authservice.login({
           email: this.email,
           password: this.password,
         }, this.rememberMe);
 
         if (response.success) {
+          console.log(response)
+          this.$store.commit('SET_LOGGED_IN', true);
           this.$router.push('/home'); // Adjust this if needed
         } else {
           this.hasError = true;

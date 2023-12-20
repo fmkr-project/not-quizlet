@@ -30,46 +30,23 @@
     <div class="container py-5" data-aos="fade-up">
         <h1 style="text-align: center;margin-bottom: 46px;">User-created Flashcards to learn together!</h1>
         <div class="row" data-aos="zoom-in" style="margin-bottom: 60px;text-align: center;">
-            <div class="col"><div class="flashcard-example red" id="flashcard-example-1">
-<div class="flashcard-example-content">
-    <div class="flashcard-example-front red">
-        <h3>Who invented the first computer in the world?</h3>
+            <div class="col" v-for="card in flashcards" :key="card.id">
+  <div class="flashcard" @click="toggleFlip(card.id)">
+    <div class="flashcard-content" :class="{ flipped: card.flipped }">
+      <div class="flashcard-front" :style="{ backgroundColor: card.color }">
+        <h4 class="card-label">Question</h4>
+        <h3 :style="{fontSize: calculateFontSize(card.question)}">{{ card.question }}</h3>
         <button class="btn btn-light btn-large">FLIP</button>
-    </div>
-    <div class="flashcard-example-back red">
-        <h3>Konrad Zuse in 1936 by the name Z1</h3>
+      </div>
+      <div class="flashcard-back" :style="{ backgroundColor: card.color}">
+        <h4 class="card-label">Answer</h4>
+        <h3 :style="{fontSize: calculateFontSize(card.answer)}">{{ card.answer }}</h3>
         <button class="btn btn-light btn-large">FLIP</button>
+      </div>
     </div>
+  </div>
 </div>
-</div>
-</div>
-            <div class="col"><div class="flashcard-example yellow" id="flashcard-example-2">
-<div class="flashcard-example-content">
-    <div class="flashcard-example-front yellow">
-        <h3>Who invented all the parts that are now used for a modern computer?</h3>
-        <button class="btn btn-light btn-large">FLIP</button>
-    </div>
-    <div class="flashcard-example-back yellow">
-        <h3>Charles Babbage in 1833.</h3>
-        <button class="btn btn-light btn-large">FLIP</button>
-    </div>
-</div>
-</div>
-</div>
-            <div class="col"><div class="flashcard-example blue" id="flashcard-example-3">
-<div class="flashcard-example-content">
-    <div class="flashcard-example-front blue">
-        <h3>Who invented the "Clarke Calculator"?</h3>
-        <button class="btn btn-light btn-large">FLIP</button>
-    </div>
-    <div class="flashcard-example-back blue">
-        <h3>Edith Clarke in 1925</h3>
-        <button class="btn btn-light btn-large">FLIP</button>
-    </div>
-</div>
-</div>
-</div>
-        </div>
+    </div>        
         <div class="mx-auto" style="max-width: 900px;">
             <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-center">
                 <div class="col mb-4">
@@ -103,12 +80,41 @@
 </body>
 </template>
 <script>
-import "@/assets/js/flashcard-example.js";
 export default {
   name: 'HomeComponent',
+  data() {
+    return {
+      flashcards: [
+      { id: 1, question: 'What is the Heisenberg Uncertainty Principle?', answer: 'It states that the position and the velocity of an object cannot both be measured exactly, at the same time, even in theory.', color: '#FF6B6B', flipped: false },
+      { id: 2, question: 'What is the significance of the Turing Test in Artificial Intelligence?', answer: 'The Turing Test measures a machine\'s ability to exhibit intelligent behavior equivalent to, or indistinguishable from, that of a human.', color: '#FFD93D', flipped: false },
+      { id: 3, question: 'What is Keynesian Economics?', answer: 'An economic theory stating that active government intervention in the marketplace and monetary policy is the best method of ensuring economic growth and stability.', color: '#6BCB77', flipped: false },
+      { id: 4, question: 'What is Schrödinger\'s Cat thought experiment?', answer: 'A paradox that illustrates the problem of the Copenhagen interpretation of quantum mechanics applied to everyday objects, in this case, a cat in a box.', color: '#4D96FF', flipped: false },
+      { id: 5, question: 'What does Moore\'s Law state?', answer: 'The number of transistors on a microchip doubles about every two years, though the cost of computers is halved.', color: '#A663CC', flipped: false },
+      { id: 6, question: 'What is the principle of Comparative Advantage in Economics?', answer: 'The ability of an individual or group to carry out a particular economic activity more efficiently than another activity.', color: '#FF926B', flipped: false }
+        // ... other flashcards
+      ],
+    };
+  },
+  methods: {
+    toggleFlip(cardId) {
+      this.flashcards = this.flashcards.map(card => ({
+        ...card,
+        flipped: card.id === cardId ? !card.flipped : card.flipped
+      }));
+    },
+    calculateFontSize(text) {
+      const baseSize = 18; // Base font size in pixels
+      const maxSize = 30;  // Maximum font size
+      const maxLength = 180; // Ideal max number of characters for base size
+
+      let calculatedSize = baseSize * (maxLength / (text.length < maxLength ? text.length : maxLength));
+      calculatedSize = calculatedSize > maxSize ? maxSize : calculatedSize;
+      return calculatedSize + 'px';
+    }
+  }
 };
 </script>
 <style scoped>
-@import "@/assets/css/flashcard-examples.css";
+@import "@/assets/css/flashcards.css";
 @import "@/assets/css/styles.css";
 </style>
