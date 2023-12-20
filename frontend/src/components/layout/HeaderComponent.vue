@@ -18,16 +18,10 @@
             <li class="nav-item">
               <router-link to="/home" class="nav-link active">Home</router-link>
             </li>
-            <li class="nav-item"></li>
             <li class="nav-item">
               <a class="nav-link" href="register.html">Projects</a>
             </li>
-            <li class="nav-item"></li>
-            <li class="nav-item"></li>
           </ul>
-          <p class="navbar-text p-0 m-0">
-            <a href="#"></a>
-          </p>
           <div v-if="isLoggedIn">
             <ul class="navbar-nav">
     <li class="nav-item">
