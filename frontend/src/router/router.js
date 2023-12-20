@@ -3,6 +3,7 @@ import HomePage from '@/views/HomePage.vue';
 import LoginPage from '@/views/LoginPage.vue';
 import ResetPasswordPage from '@/views/ResetPasswordPage';
 import TestPage from '@/views/TestPage.vue';
+import ProfilePage from '@/views/ProfilePage.vue';
 const routes = [
   {
     path: '/',
@@ -27,6 +28,11 @@ const routes = [
     path:'/test',
     name: 'test',
     component: TestPage
+  },
+  {
+    path:'/profile',
+    name: 'Profile',
+    component: ProfilePage
   }
 
   // ... other routes ...
