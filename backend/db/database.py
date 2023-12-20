@@ -243,6 +243,24 @@ class Database:
         params = {'user_id': user_id, 'password_hash': password_hash, 'salt': salt}
         self.execute_query(query, params)
 
+    def username_exists(self, username, exclude_user_id=None):
+        query = 'SELECT COUNT(*) as c FROM users WHERE username = :username'
+        params = {'username': username}
+
+        if exclude_user_id is not None:
+            query += ' AND id != :exclude_user_id'
+            params['exclude_user_id'] = exclude_user_id
+
+        result = self.execute_query(query, params, False)
+        return result[0]["c"] > 0  # Returns True if username exists
+
+    def update_username(self, user_id, new_username):
+        query = 'UPDATE users SET username = :new_username WHERE id = :user_id;'
+        params = {'user_id': user_id, 'new_username': new_username}
+        self.execute_query(query, params)
+
+
+
     def register_user(self, username, email, server_hash, salt):
         query = 'INSERT INTO users(username, email, password_hash, salt) VALUES(:username, :email, :server_hash, :salt)'
         params = {'username': username, 'email': email, 'server_hash': server_hash, 'salt': salt}

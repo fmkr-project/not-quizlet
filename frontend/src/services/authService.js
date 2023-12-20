@@ -135,6 +135,13 @@ class AuthService {
         return { success: false, message: error.response?.data?.error || 'Failed to fetch user details' };
     }
   }
+
+  async modify_password(){
+
+  }
+  async modify_username(){
+    
+  }
 }
 
 export default AuthService;

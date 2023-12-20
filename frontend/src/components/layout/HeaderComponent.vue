@@ -61,9 +61,10 @@
     </a>
           <div class="dropdown-menu">
               <a class="dropdown-item" href="#" style="width: 121.808px;">
+                <router-link to="/profile">
                 <svg class="bi bi-person-fill" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-size: 17px;width: 25.9922px;height: 25.9922px;">
                   <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
-                </svg>Profile </a>
+                </svg>Profile </router-link></a>
               <a class="dropdown-item" href="#" @click.prevent="logout">
                 <svg class="icon icon-tabler icon-tabler-logout" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width: 25.997px;height: 25.997px;">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
