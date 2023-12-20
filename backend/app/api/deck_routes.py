@@ -33,3 +33,12 @@ def modify_deck(deck_id):
             return jsonify({"error": "Deck modification failed"}), 500
     else:
         return jsonify({"error": "Unauthorized modification attempt or deck not found"}), 403
+    
+@deck_blueprint.route('/admin', methods=['GET'])
+def get_admin_decks():
+    admin_id = 0  # Assuming admin's creator_id is 0
+    decks = my_db.get_decks_by_creator_id(admin_id)
+    if decks is not None:
+        return jsonify({'decks': decks}), 200
+    else:
+        return jsonify({'error': 'No decks found for admin'}), 404
