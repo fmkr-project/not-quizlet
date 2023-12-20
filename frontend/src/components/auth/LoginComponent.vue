@@ -27,7 +27,7 @@
                 </div>
                 <div class="d-flex justify-content-center"><button class="btn btn-primary" type="submit">Sign In</button></div>
                 <p class="text-center text-danger mt-3">{{ errorMessage }}</p>
-                <p class="text-center mt-3">Don’t have an account? <a href="/auth/register" class="text-underline">Click here to sign up.</a></p>
+                <p class="text-center mt-3">Don’t have an account? <a href="/register" class="text-underline">Click here to sign up.</a></p>
             </form>
             <div class="reset-password-link d-flex justify-content-center">
               <ResetPasswordComponent/>
@@ -119,7 +119,7 @@ export default {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    height: 70vh; /* Full height of the viewport */
+    min-height: 70vh; /* Full height of the viewport */
 }
 
 /* The login form */
