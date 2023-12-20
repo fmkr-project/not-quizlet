@@ -77,7 +77,7 @@
 </ul>
           </div>
           <div v-else>
-            <a href="#" style="padding: 0px;margin: 10px;text-decoration: underline;margin-right: 16px;">Register</a>
+            <a href="/register" style="padding: 0px;margin: 10px;text-decoration: underline;margin-right: 16px;">Register</a>
             <router-link to="/login" class="btn btn-primary shadow" role="button">Sign in</router-link>
           </div>
         </div>
