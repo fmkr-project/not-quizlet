@@ -220,6 +220,12 @@ class Database:
         params = {'deck_id': deck_id}
         return self.execute_query(query, params, False)
     
+    def get_decks_by_creator_id(self, creator_id):
+        """Get decks created by a specific user."""
+        query = "SELECT * FROM decks WHERE creator_id = :creator_id"
+        params = {'creator_id': creator_id}
+        return self.execute_query(query, params, False)
+    
 
 
     def user_exists_already(self, username=None, email=None):
@@ -358,3 +364,5 @@ class Database:
         query = "UPDATE users SET pfp_image_location = :pfp_image_location WHERE id = :user_id"
         params = {"pfp_image_location": new_pfp_url, "user_id": user_id}
         self.execute_query(query, params)
+        
+
