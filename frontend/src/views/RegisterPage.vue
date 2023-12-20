@@ -1,22 +1,25 @@
 <template>
-    <div class="register-container">
-      <h1>Register</h1>
-      <RegisterForm></RegisterForm>
-      <!-- Additional content or links -->
-    </div>
-  </template>
-  
-  <script>
-  import RegisterForm from '@/components/auth/RegisterForm.vue';
-  
-  export default {
-    components: {
-      RegisterForm
-    }
-  };
-  </script>
-  
-  <style>
-  /* Styles for the register view */
-  </style>
-  
+  <div>
+    <HeaderComponent />
+    <RegisterComponent />
+    <FooterComponent />
+  </div>
+</template>
+
+<script>
+import HeaderComponent from "@/components/layout/HeaderComponent.vue";
+import RegisterComponent from "@/components/auth/RegisterComponent.vue";
+import FooterComponent from "@/components/layout/FooterComponent.vue";
+
+export default {
+  components: {
+    HeaderComponent,
+    RegisterComponent,
+    FooterComponent,
+  },
+};
+</script>
+
+<style>
+/* Add any additional styles for the RegisterPage here */
+</style>
