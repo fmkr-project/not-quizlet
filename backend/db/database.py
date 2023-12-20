@@ -10,6 +10,7 @@ USE_LOCAL_DATABASE_ENV = getenv("USE_LOCAL_DATABASE", "True").lower() == "true"
 DB_PATH = getenv("DB_PATH")
 DB_TEST_PATH = getenv("DB_TEST_PATH")
 DB_SCHEMA = getenv("DB_SCHEMA")
+DB_DUMMY_DATA = getenv("DB_DUMMY_DATA")
 AWS_DATABASE_ENDPOINT = getenv('AWS_DATABASE_ENDPOINT')
 AWS_DATABASE_PORT = getenv('AWS_DATABASE_PORT', '3306')
 AWS_DATABASE_USERNAME = getenv('AWS_DATABASE_USERNAME')
@@ -117,7 +118,8 @@ class Database:
             self.close()
     def reset(self):
         self.drop_all_tables()
-        self.execute_sql()
+        self.execute_sql(DB_SCHEMA)
+        self.execute_sql(DB_DUMMY_DATA)
     def show_all_tables(self):
         """Shows all the tables of the database"""
         if self.is_local:
