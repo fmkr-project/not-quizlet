@@ -147,3 +147,324 @@ INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES
 INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
 (71, 8), (72, 8), (73, 8), (74, 8), (75, 8), 
 (76, 8), (77, 8), (78, 8), (79, 8), (80, 8);
+
+-- Deck 9
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('English to French Translation', 'Deck for translating common English phrases and words into French.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Hello', 'Bonjour', 0),
+('Goodbye', 'Au revoir', 0),
+('Please', "S'il vous plaît", 0),
+('Thank you', 'Merci', 0),
+('Yes', 'Oui', 0),
+('No', 'Non', 0),
+('How are you?', 'Comment ça va?', 0),
+('I am fine', 'Je vais bien', 0),
+('What is your name?', 'Comment vous appelez-vous?', 0),
+('My name is...', "Je m'appelle...", 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(81, 9), (82, 9), (83, 9), (84, 9), (85, 9), 
+(86, 9), (87, 9), (88, 9), (89, 9), (90, 9);
+
+-- Deck 10
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('English to French - Fruits', 'Translate fruit names from English to French.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Apple', 'Pomme', 0),
+('Banana', 'Banane', 0),
+('Grape', 'Raisin', 0),
+('Orange', 'Orange', 0),
+('Pineapple', 'Ananas', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(91, 10), (92, 10), (93, 10), (94, 10), (95, 10);
+
+-- Deck 11
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('French to English - Fruits', 'Translate fruit names from French to English.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Pomme', 'Apple', 0),
+('Banane', 'Banana', 0),
+('Raisin', 'Grape', 0),
+('Orange', 'Orange', 0),
+('Ananas', 'Pineapple', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(96, 11), (97, 11), (98, 11), (99, 11), (100, 11);
+
+-- Deck 12
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Spanish to English - Fruits', 'Translate fruit names from Spanish to English.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Manzana', 'Apple', 0),
+('Plátano', 'Banana', 0),
+('Uva', 'Grape', 0),
+('Naranja', 'Orange', 0),
+('Piña', 'Pineapple', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(101, 12), (102, 12), (103, 12), (104, 12), (105, 12);
+
+-- Deck 13
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('English to English - Fruits', 'Learn synonyms or descriptions of fruits in English.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Apple', 'A round fruit with red, yellow, or green skin.', 0),
+('Banana', 'A long curved yellow fruit.', 0),
+('Grape', 'A small juicy fruit, typically purple or green.', 0),
+('Orange', 'A citrus fruit with a tough bright orange skin.', 0),
+('Pineapple', 'A tropical fruit with a rough green or brown skin.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(111, 13), (112, 13), (113, 13), (114, 13), (115, 13);
+
+-- Deck 14
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Learning Verbs in English', 'Study and learn common English verbs.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Run', 'Move at a speed faster than a walk.', 0),
+('Jump', 'Push oneself off a surface into the air by using the muscles in one’s legs.', 0),
+('Read', 'Look at and comprehend the meaning of written or printed matter.', 0),
+('Write', 'Mark coherent words on paper.', 0),
+('Speak', 'Talk: use vocal sounds to express thoughts or feelings.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(111, 14), (112, 14), (113, 14), (114, 14), (115, 14);
+
+-- Deck 15
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Fill in the Blank - Single Word', 'Complete the sentence by filling in a single word.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('An apple a day keeps the ___ away.', 'doctor', 0),
+('Better late than ___ .', 'never', 0),
+('Actions speak louder than ___ .', 'words', 0),
+('The early bird catches the ___ .', 'worm', 0),
+('A picture is worth a thousand ___ .', 'words', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(116, 15), (117, 15), (118, 15), (119, 15), (120, 15);
+
+-- Deck 16
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Basic German Vocabulary', 'Learn basic German vocabulary words.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Hello', 'Hallo', 0),
+('Goodbye', 'Auf Wiedersehen', 0),
+('Thank you', 'Danke', 0),
+('Yes', 'Ja', 0),
+('No', 'Nein', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(121, 16), (122, 16), (123, 16), (124, 16), (125, 16);
+
+-- Deck 17
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Basic Spanish Vocabulary', 'Learn basic Spanish vocabulary words.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Hello', 'Hola', 0),
+('Goodbye', 'Adiós', 0),
+('Thank you', 'Gracias', 0),
+('Yes', 'Sí', 0),
+('No', 'No', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(126, 17), (127, 17), (128, 17), (129, 17), (130, 17);
+
+-- Deck 18
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Basic French Vocabulary', 'Learn basic French vocabulary words.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Hello', 'Bonjour', 0),
+('Goodbye', 'Au revoir', 0),
+('Thank you', 'Merci', 0),
+('Yes', 'Oui', 0),
+('No', 'Non', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(131, 18), (132, 18), (133, 18), (134, 18), (135, 18);
+
+-- Deck 19
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Advanced German Vocabulary', 'Learn advanced German vocabulary words.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Freedom', 'Freiheit', 0),
+('Experience', 'Erfahrung', 0),
+('Knowledge', 'Wissen', 0),
+('Strength', 'Stärke', 0),
+('Happiness', 'Glück', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(136, 19), (137, 19), (138, 19), (139, 19), (140, 19);
+
+-- Deck 20
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('German Phrases for Travelers', 'Essential phrases for travelers in German.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Where is the bathroom?', 'Wo ist die Toilette?', 0),
+('How much does this cost?', 'Wie viel kostet das?', 0),
+('Can you help me?', 'Können Sie mir helfen?', 0),
+('I would like a coffee.', 'Ich möchte einen Kaffee.', 0),
+('I do not understand.', 'Ich verstehe nicht.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(141, 20), (142, 20), (143, 20), (144, 20), (145, 20);
+
+-- Deck 21
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Advanced Spanish Vocabulary', 'Learn advanced Spanish vocabulary words.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Freedom', 'Libertad', 0),
+('Experience', 'Experiencia', 0),
+('Knowledge', 'Conocimiento', 0),
+('Strength', 'Fuerza', 0),
+('Happiness', 'Felicidad', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(146, 21), (147, 21), (148, 21), (149, 21), (150, 21);
+
+-- Deck 22
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Spanish Phrases for Travelers', 'Essential phrases for travelers in Spanish.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Where is the bathroom?', '¿Dónde está el baño?', 0),
+('How much does this cost?', '¿Cuánto cuesta esto?', 0),
+('Can you help me?', '¿Puede ayudarme?', 0),
+('I would like a coffee.', 'Me gustaría un café.', 0),
+('I do not understand.', 'No entiendo.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(151, 22), (152, 22), (153, 22), (154, 22), (155, 22);
+
+-- Deck 23
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Advanced French Vocabulary', 'Learn advanced French vocabulary words.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Freedom', 'Liberté', 0),
+('Experience', 'Expérience', 0),
+('Knowledge', 'Connaissance', 0),
+('Strength', 'Force', 0),
+('Happiness', 'Bonheur', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(156, 23), (157, 23), (158, 23), (159, 23), (160, 23);
+
+-- Deck 24
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('French Phrases for Travelers', 'Essential phrases for travelers in French.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Where is the bathroom?', 'Où sont les toilettes?', 0),
+('How much does this cost?', 'Combien cela coûte-t-il?', 0),
+('Can you help me?', 'Pouvez-vous m’aider?', 0),
+('I would like a coffee.', 'Je voudrais un café.', 0),
+('I do not understand.', 'Je ne comprends pas.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(161, 24), (162, 24), (163, 24), (164, 24), (165, 24);
+
+-- Deck 25
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('German Conversation Practice', 'Practice conversational phrases in German.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('How are you?', 'Wie geht es Ihnen?', 0),
+('What is your name?', 'Wie heißen Sie?', 0),
+('Where are you from?', 'Woher kommen Sie?', 0),
+('I like to travel.', 'Ich reise gerne.', 0),
+('I am learning German.', 'Ich lerne Deutsch.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(166, 25), (167, 25), (168, 25), (169, 25), (170, 25);
+
+-- Deck 26
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Computer Science Fundamentals', 'Learn the fundamentals of computer science.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('What is a computer?', 'An electronic device for storing and processing data.', 0),
+('Define algorithm.', 'A set of instructions designed to perform a specific task.', 0),
+('What is programming?', 'The process of creating instructions that tell a computer how to perform a task.', 0),
+('Explain binary code.', 'The most basic language of computers, representing data in 0s and 1s.', 0),
+('What is a database?', 'An organized collection of data, generally stored electronically.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(171, 26), (172, 26), (173, 26), (174, 26), (175, 26);
+
+-- Deck 27
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Human Anatomy - Body Parts', 'Study and learn about different body parts.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Heart', 'A muscular organ that pumps blood through the body.', 0),
+('Brain', 'The organ of the body in the head that controls functions, movements, sensations, and thoughts.', 0),
+('Lungs', 'Pair of breathing organs that process the air we inhale.', 0),
+('Liver', 'A large organ that processes nutrients and filters blood.', 0),
+('Kidneys', 'Organs that filter waste from the blood and produce urine.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(176, 27), (177, 27), (178, 27), (179, 27), (180, 27);
+
+-- Deck 28
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Basic Medical Terminology', 'Learn basic terms used in the medical field.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Hypertension', 'A condition in which the blood pressure is persistently elevated.', 0),
+('Diabetes', 'A disease that occurs when blood glucose is too high.', 0),
+('Antibiotics', 'Medicines used to treat infections caused by bacteria.', 0),
+('Vaccine', 'A substance that stimulates the body’s immune response against diseases.', 0),
+('Anesthesia', 'Medically induced insensitivity to pain.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(181, 28), (182, 28), (183, 28), (184, 28), (185, 28);
+
+-- Deck 29: World Geography Basics
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('World Geography Basics', 'Basics of world geography including countries, capitals, and geographical features.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('What is the capital of France?', 'Paris', 0),
+('What continent is Brazil in?', 'South America', 0),
+('Which is the longest river in the world?', 'The Nile River', 0),
+('What is the largest ocean?', 'The Pacific Ocean', 0),
+('Which country has the most population?', 'China', 0),
+('What is the smallest country in the world?', 'Vatican City', 0),
+('Which desert is the largest in the world?', 'The Sahara Desert', 0),
+('What mountain is the highest above sea level?', 'Mount Everest', 0),
+('Which forest is known as the lungs of the Earth?', 'The Amazon Rainforest', 0),
+('Which country is both in Asia and Europe?', 'Turkey', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(186, 29), (187, 29), (188, 29), (189, 29), (190, 29),
+(191, 29), (192, 29), (193, 29), (194, 29), (195, 29);
+
+
+-- Deck 30
+INSERT INTO "decks" ("name", "description", "creator_id") VALUES 
+('Medical Staff Roles', 'Learn about different roles of medical staff.', 0);
+
+INSERT INTO "cards" ("front_side", "back_side", "creator_id") VALUES 
+('Doctor', 'A qualified practitioner of medicine, a physician.', 0),
+('Nurse', 'A person trained to care for the sick or infirm.', 0),
+('Surgeon', 'A medical doctor who performs operations.', 0),
+('Pharmacist', 'A person trained to prepare and dispense medicinal drugs.', 0),
+('Paramedic', 'A person trained to give emergency medical care.', 0);
+
+INSERT INTO "card_links" ("card_id", "deck_id") VALUES 
+(196, 30), (197, 30), (198, 30), (199, 30), (200, 30);
