@@ -5,6 +5,7 @@ import ResetPasswordPage from '@/views/ResetPasswordPage';
 import TestPage from '@/views/TestPage.vue';
 import ProfilePage from '@/views/ProfilePage.vue';
 import RegisterPage from '@/views/RegisterPage';
+import DeckhubPage from '@/views/DeckhubPage';
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
     path:'/profile',
     name: 'Profile',
     component: ProfilePage
+  },
+  {
+    path: '/deckhub',
+    name: 'Deckhub',
+    component: DeckhubPage
   }
 
   // ... other routes ...
