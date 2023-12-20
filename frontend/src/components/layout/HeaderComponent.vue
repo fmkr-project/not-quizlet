@@ -41,7 +41,7 @@
       <span class="d-lg-flex" style="font-size: 20px;">
         <strong>
           <!-- Bind username here -->
-          <span style="color: rgb(0, 0, 0);">{{ userDetails?.username || 'User' }}</span>
+          <span style="color: rgb(0, 0, 0); margin-right: 16px">{{ userDetails?.username || 'User' }}</span>
         </strong>
       </span>
       <!-- Bind profile picture here -->
@@ -49,14 +49,14 @@
         v-if="userDetails?.pfp_image_location"
         :src="userDetails.pfp_image_location"
         class="border rounded-circle"
-        style="width: 43.997px; height: 43.615px; background: var(--bs-blue);"
+        style="width: 80px; height: 80px; background: var(--bs-blue);"
       />
       <!-- Fallback image if no profile picture -->
       <img
         v-else
         src="logo-nobg.png"
         class="border rounded-circle"
-        style="width: 43.997px; height: 43.615px; background: var(--bs-blue);"
+        style="width: 80px; height: 80px; background: var(--bs-blue);"
       />
     </a>
           <div class="dropdown-menu">
