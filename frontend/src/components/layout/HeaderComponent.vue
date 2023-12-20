@@ -19,7 +19,7 @@
         <router-link to="/home" class="nav-link active">Home</router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="register.html">Deck Hub</a>
+        <a class="nav-link" href="/deckhub">Deck Hub</a>
       </li>
 
       <!-- Conditional links that appear only when the user is logged in -->
