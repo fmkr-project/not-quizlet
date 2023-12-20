@@ -31,7 +31,29 @@
           <div v-if="isLoggedIn">
             <ul class="navbar-nav">
     <li class="nav-item">
-        <div class="nav-item dropdown d-lg-flex"><a class="active d-lg-flex align-items-lg-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-lg-flex" style="font-size: 20px;"><strong><span style="color: rgb(0, 0, 0);">NOUV </span></strong></span><img class="border rounded-circle" src="logo-nobg.png" style="width: 43.997px;height: 43.615px;background: var(--bs-blue);" /></a>
+      <div class="nav-item dropdown d-lg-flex">
+    <a class="active d-lg-flex align-items-lg-center" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+      <span class="d-lg-flex" style="font-size: 20px;">
+        <strong>
+          <!-- Bind username here -->
+          <span style="color: rgb(0, 0, 0);">{{ userDetails?.username || 'User' }}</span>
+        </strong>
+      </span>
+      <!-- Bind profile picture here -->
+      <img
+        v-if="userDetails?.pfp_image_location"
+        :src="userDetails.pfp_image_location"
+        class="border rounded-circle"
+        style="width: 43.997px; height: 43.615px; background: var(--bs-blue);"
+      />
+      <!-- Fallback image if no profile picture -->
+      <img
+        v-else
+        src="logo-nobg.png"
+        class="border rounded-circle"
+        style="width: 43.997px; height: 43.615px; background: var(--bs-blue);"
+      />
+    </a>
           <div class="dropdown-menu">
               <a class="dropdown-item" href="#" style="width: 121.808px;">
                 <svg class="bi bi-person-fill" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-size: 17px;width: 25.9922px;height: 25.9922px;">
@@ -70,6 +92,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.state.isLoggedIn;
+    },
+    userDetails() {
+      return this.$store.state.userDetails;
     }
   },
   methods: {
