@@ -235,7 +235,7 @@ def modify_profile():
     new_username = data.get('username')
     new_password = data.get('password')
     file = request.files.get('file')  # File upload
-
+    print(new_username)
     if user_id is None:
         return jsonify({'error': 'Unauthorized'}), 403
 
@@ -288,5 +288,6 @@ def modify_profile():
                 return jsonify({'error': 'Error updating profile picture'}), 500
         else:
             return jsonify({'error': 'File type not allowed'}), 400
-
+    cache_key = f"user_details_{user_id}"
+    current_app.cache.delete(cache_key)
     return jsonify({'message': 'Profile updated successfully'}), 200

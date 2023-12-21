@@ -136,11 +136,55 @@ class AuthService {
     }
   }
 
-  async modify_password(){
+  async modifyProfile(userData, newProfilePic) {
+    try {
+      let formData = new FormData();
+      formData.append('username', userData.username);
+      formData.append('password', userData.password);
 
-  }
-  async modify_username(){
-    
+      // Append file if provided
+      if (newProfilePic) {
+        formData.append('file', newProfilePic);
+      }
+      for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+      const response = await axios.post(API_URL + "modify_profile", formData, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      console.log(error)
+      // Detailed error handling based on the response status code
+      let message = 'Error updating profile';
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            message = 'Invalid request. Please check your input.';
+            break;
+          case 401:
+            message = 'Unauthorized. You might need to log in again.';
+            break;
+          case 403:
+            message = 'Forbidden. You cannot modify this profile.';
+            break;
+          case 409:
+            message = 'Username already taken. Please choose another one.';
+            break;
+          case 500:
+            message = 'Internal Server Error. Please try again later.';
+            break;
+          default:
+            message = error.response.data.error || 'An unexpected error occurred.';
+            break;
+        }
+      }
+      return { success: false, message };
+    }
   }
 }
 

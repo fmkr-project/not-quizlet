@@ -42,6 +42,7 @@
   
   
 <script>
+import AuthService from '@/services/authService';
 export default {
     name: 'ProfileComponent',
     data() {
@@ -63,9 +64,29 @@ export default {
             };
         }
         },
-        onSubmit() {
-        // Handle form submission including all updates
-        // TODO: Implement API calls or Vuex actions to update the user details
+        async onSubmit() {
+            if (this.newPassword !== this.verifyPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            const authservice = new AuthService();
+            const response = await authservice.modifyProfile({
+                username: this.newUsername,
+                password: this.newPassword
+            }, this.selectedImage ? document.getElementById('profile-upload').files[0] : null);
+            if (response.success) {
+                alert(response.message);
+                const resp_details = await authservice.getUserDetails();
+                if (resp_details.success){
+                    this.$store.commit('SET_USER_DETAILS', resp_details.userDetails);
+                }
+                // Update local user details and redirect or refresh data as needed
+                // e.g., this.$store.commit('SET_USER_DETAILS', updatedUserDetails);
+                // Redirect or update the view as necessary
+            } else {
+                alert(response.message);
+            }
         }
     },
     computed: {
