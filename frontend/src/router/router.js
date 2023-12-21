@@ -8,6 +8,8 @@ import RegisterPage from '@/views/RegisterPage';
 import DeckhubPage from '@/views/DeckhubPage';
 import DeckReviewPage from '@/views/DeckReviewPage';
 import DeckUsersPage from '@/views/DeckUsersPage';
+import ViewCardPage from '@/views/ViewCardPage';
+import CreateCardPage from '@/views/CreateCardPage';
 
 const routes = [
   {
@@ -59,6 +61,16 @@ const routes = [
     path: '/my-decks',
     name:  'My Decks',
     component: DeckUsersPage
+  },
+  {
+    path: '/mycard/view',
+    name:  'ViewCard',
+    component: ViewCardPage
+  },
+  {
+    path: '/mycard/create',
+    name:  'CreateCard',
+    component: CreateCardPage
   }
 
   // ... other routes ...

@@ -259,6 +259,14 @@ class Database:
         """
         params = {'deck_id': deck_id}
         return self.execute_query(query, params, False)  # Use execute_query, not execute
+    
+    def get_cards_by_user_id(self, user_id):
+        """Gets all cards created by the user with the given user_id"""
+        query = "SELECT * FROM cards WHERE creator_id = :user_id"
+        params = {'user_id': user_id}
+        return self.execute_query(query, params)
+
+    
 
 
     

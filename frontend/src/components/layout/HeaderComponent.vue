@@ -27,7 +27,7 @@
         <router-link to="/my-decks" class="nav-link">My Decks</router-link>
       </li>
       <li class="nav-item" v-if="isLoggedIn">
-        <router-link to="/my-cards" class="nav-link">My Cards</router-link>
+        <router-link to="/mycard/view" class="nav-link">My Cards</router-link>
       </li>
       <li class="nav-item" v-if="isLoggedIn">
         <router-link to="/my-profile" class="nav-link">My Profile</router-link>
