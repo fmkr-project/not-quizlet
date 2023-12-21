@@ -46,6 +46,20 @@ class DeckService {
     }
   }
 
+  // Method to get flashcards by deck ID
+  async getFlashcardsByDeckId(deckId) {
+    try {
+      const response = await axios.get(API_URL + `${deckId}/flashcards`, { withCredentials: true });
+      // Assuming the API returns an array of flashcards in the response's data
+      return { success: true, flashcards: response.data.flashcards };
+    } catch (error) {
+      console.error('Error fetching flashcards:', error);
+      // Handle the error appropriately
+      return { success: false, message: 'Failed to fetch flashcards' };
+    }
+  }
+
+
   // ... any other deck-related methods
 }
 
