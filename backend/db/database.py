@@ -225,6 +225,17 @@ class Database:
         query = "SELECT * FROM decks WHERE creator_id = :creator_id"
         params = {'creator_id': creator_id}
         return self.execute_query(query, params, False)
+    def get_flashcards_by_deck_id(self, deck_id):
+        query = """
+        SELECT cards.id, cards.front_side, cards.back_side
+        FROM cards
+        INNER JOIN card_links ON cards.id = card_links.card_id
+        WHERE card_links.deck_id = :deck_id
+        """
+        params = {'deck_id': deck_id}
+        return self.execute_query(query, params, False)  # Use execute_query, not execute
+
+
     
 
 
