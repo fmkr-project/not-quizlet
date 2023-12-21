@@ -42,3 +42,15 @@ def get_admin_decks():
         return jsonify({'decks': decks}), 200
     else:
         return jsonify({'error': 'No decks found for admin'}), 404
+    
+@deck_blueprint.route('/<int:deck_id>/flashcards', methods=['GET'])
+def get_flashcards(deck_id):
+    try:
+        flashcards = my_db.get_flashcards_by_deck_id(deck_id)
+        if flashcards:
+            # Assuming your 'execute' method returns a list of dictionaries
+            return jsonify({'flashcards': flashcards}), 200
+        else:
+            return jsonify({'message': 'No flashcards found for this deck'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
