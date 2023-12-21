@@ -30,7 +30,12 @@
         <div class="container py-5">
         <h1 style="text-align: center; margin-bottom: 46px;">Public Decks</h1>
         <div class="deck-grid">
-            <div class="deck-card" v-for="deck in adminDecks" :key="deck.id">
+            <div
+            class="deck-card"
+            v-for="deck in adminDecks"
+            :key="deck.id"
+            @click="navigateToDeckReview(deck.id)"
+            >
             <div class="deck-card-body">
                 <h5 class="deck-title">{{ deck.name }}</h5>
                 <p class="deck-description">{{ deck.description }}</p>
@@ -49,28 +54,14 @@ export default {
     name: 'DeckHubComponent',
     data() {
         return {
-            adminDecks: [],
+        adminDecks: [],
+        selectedDeckId: null
         };
     },
     created() {
         this.fetchAdminDecks();
     },
     methods: {
-        toggleFlip(cardId) {
-            this.flashcards = this.flashcards.map(card => ({
-                ...card,
-            flipped: card.id === cardId ? !card.flipped : card.flipped
-            }));
-        },
-        calculateFontSize(text) {
-            const baseSize = 18; // Base font size in pixels
-            const maxSize = 30;  // Maximum font size
-            const maxLength = 180; // Ideal max number of characters for base size
-
-            let calculatedSize = baseSize * (maxLength / (text.length < maxLength ? text.length : maxLength));
-            calculatedSize = calculatedSize > maxSize ? maxSize : calculatedSize;
-            return calculatedSize + 'px';
-        },
         async fetchAdminDecks() {
             const response = await DeckService.fetchAdminDecks();
             if (response.success) {
@@ -80,6 +71,9 @@ export default {
                 // Handle error as needed
             }
         },
+        navigateToDeckReview(deckId) {
+            this.$router.push({ name: 'DeckReview', params: { id: deckId } });
+        },
     }
 };
 </script>
@@ -88,9 +82,6 @@ export default {
 @import "@/assets/css/flashcards.css";
 @import "@/assets/css/styles.css";
 
-.decks-section {
-  /* Style for the decks section */
-}
 
 .deck-grid {
   display: grid;
