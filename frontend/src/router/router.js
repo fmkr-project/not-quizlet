@@ -6,6 +6,7 @@ import TestPage from '@/views/TestPage.vue';
 import ProfilePage from '@/views/ProfilePage.vue';
 import RegisterPage from '@/views/RegisterPage';
 import DeckhubPage from '@/views/DeckhubPage';
+import DeckReviewPage from '@/views/DeckReviewPage'
 
 const routes = [
   {
@@ -46,7 +47,13 @@ const routes = [
     path: '/deckhub',
     name: 'Deckhub',
     component: DeckhubPage
-  }
+  },
+  {
+    path: '/review/deck/:id',
+    name: 'DeckReview',
+    component: DeckReviewPage,
+    props: true  // This allows passing props via route
+  },
 
   // ... other routes ...
 ];
