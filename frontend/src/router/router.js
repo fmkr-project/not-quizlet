@@ -6,7 +6,8 @@ import TestPage from '@/views/TestPage.vue';
 import ProfilePage from '@/views/ProfilePage.vue';
 import RegisterPage from '@/views/RegisterPage';
 import DeckhubPage from '@/views/DeckhubPage';
-import DeckReviewPage from '@/views/DeckReviewPage'
+import DeckReviewPage from '@/views/DeckReviewPage';
+import DeckUsersPage from '@/views/DeckUsersPage';
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     component: DeckReviewPage,
     props: true  // This allows passing props via route
   },
+  {
+    path: '/my-decks',
+    name:  'My Decks',
+    component: DeckUsersPage
+  }
 
   // ... other routes ...
 ];

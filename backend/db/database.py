@@ -168,8 +168,33 @@ class Database:
         query = "INSERT INTO card_links (card_id, deck_id) VALUES (:card_id, :deck_id)"
         self.execute_query(query, {'card_id': card_id, 'deck_id': deck_id}, True)
 
+    def get_public_decks(self):
+        query = "SELECT * FROM decks WHERE is_public = :is_public"
+        params = {"is_public" : 1}
+        result = self.execute_query(query, params, False)
+        return result          
+    def get_all_decks_user(self, user_id):
+        l = []
+        query_created = """
+                SELECT d.id, d.name, d.description, "created" as created
+                FROM decks d WHERE d.creator_id = :user_id;"""
 
+        query_variations = """SELECT d.id, d.name, d.description, "Variation" AS variation
+                FROM deck_variations dv
+                JOIN decks d ON dv.original_deck_id = d.id
+                WHERE dv.user_id = :user_id;"""
+        query_favorites = """                SELECT d.id, d.name, d.description, "Favorite" AS Favorite
+                FROM users_links ul
+                JOIN decks d ON ul.deck_id = d.id
+                WHERE ul.user_id = :user_id AND ul.favorite_tag = 1;"""
 
+        params = {"user_id": user_id}
+        result = {
+            "created": self.execute_query(query_created, params, False),
+            "variations": self.execute_query(query_variations, params, False),
+            "favorites": self.execute_query(query_favorites, params, False)
+        }
+        return result
     def get_deck_by_id(self, deck_id):
         """Gets the deck with that id"""
         query = "SELECT * FROM decks WHERE id = :card_id"

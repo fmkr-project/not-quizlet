@@ -7,7 +7,7 @@ class DeckService {
   // Fetches decks created by the admin
   async fetchAdminDecks() {
     try {
-      const response = await axios.get(API_URL + 'admin', { withCredentials: true });
+      const response = await axios.get(API_URL + 'public_decks', { withCredentials: true });
       return { success: true, decks: response.data.decks };
     } catch (error) {
       let message = 'Failed to fetch decks';
@@ -18,7 +18,19 @@ class DeckService {
       return { success: false, message };
     }
   }
-
+  async fetchUserDecks() {
+    try {
+      const response = await axios.get(API_URL + 'get_user_decks', { withCredentials: true });
+      return { success: true, decks: response.data.decks };
+    } catch (error) {
+      let message = 'Failed to fetch decks';
+      if (error.response) {
+        // You can expand on error handling based on the status codes
+        message = error.response.data.error || message;
+      }
+      return { success: false, message };
+    }
+  }
   // Add other methods as needed for creating, modifying, or deleting decks
   async createDeck(deckData) {
     try {

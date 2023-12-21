@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, g
 from .auth import login_required
 from .user_routes import get_user_id_from_token
 from db import my_db
@@ -7,7 +7,7 @@ deck_blueprint = Blueprint('decks', __name__)
 @deck_blueprint.route('/create', methods=['POST'])
 @login_required
 def create_deck():
-    user_id_from_token = get_user_id_from_token()
+    user_id_from_token = getattr(g, 'user_id_from_token', None)
     data = request.json
     name = data.get('name')
     description = data.get('description')
@@ -21,7 +21,7 @@ def create_deck():
 @deck_blueprint.route('/deck/modify/<int:deck_id>', methods=['PUT'])
 @login_required
 def modify_deck(deck_id):
-    user_id_from_token = get_user_id_from_token()
+    user_id_from_token = getattr(g, 'user_id_from_token', None)
     data = request.json
     name = data.get('name', None)
     description = data.get('description', None)
@@ -34,14 +34,13 @@ def modify_deck(deck_id):
     else:
         return jsonify({"error": "Unauthorized modification attempt or deck not found"}), 403
     
-@deck_blueprint.route('/admin', methods=['GET'])
-def get_admin_decks():
-    admin_id = 0  # Assuming admin's creator_id is 0
-    decks = my_db.get_decks_by_creator_id(admin_id)
+@deck_blueprint.route('/public_decks', methods=['GET'])
+def get_public_decks():
+    decks = my_db.get_public_decks()
     if decks is not None:
         return jsonify({'decks': decks}), 200
     else:
-        return jsonify({'error': 'No decks found for admin'}), 404
+        return jsonify({'error': 'No public decks found'}), 404
     
 @deck_blueprint.route('/<int:deck_id>/flashcards', methods=['GET'])
 def get_flashcards(deck_id):
@@ -54,3 +53,10 @@ def get_flashcards(deck_id):
             return jsonify({'message': 'No flashcards found for this deck'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@deck_blueprint.route('/get_user_decks', methods=['GET'])
+@login_required
+def get_user_decks():
+    user_id_from_token = getattr(g, 'user_id_from_token', None)
+    decks = my_db.get_all_decks_user(user_id_from_token)
+    return jsonify({'decks': decks}), 200
