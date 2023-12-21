@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, g
 from .auth import login_required
 from .user_routes import get_user_id_from_token
 from db import my_db
@@ -33,3 +33,19 @@ def modify_card(card_id):
             return jsonify({"error": "Card modification failed"}), 500
     else:
         return jsonify({"error": "Unauthorized modification attempt or card not found"}), 403
+    
+@card_blueprint.route('/mycard/view', methods=['GET'])
+@login_required
+def get_user_cards():
+    user_id_from_token = getattr(g, 'user_id_from_token', None)
+
+    try:
+        cards = my_db.get_cards_by_user_id(user_id_from_token)
+        if cards:
+            return jsonify({"cards": cards}), 200
+        else:
+            return jsonify({"message": "No cards found for this user"}), 404
+    except Exception as e:
+        # Log the exception for debugging purposes
+        print(f"An error occurred: {e}")
+        return jsonify({"error": "An error occurred while fetching cards"}), 500
